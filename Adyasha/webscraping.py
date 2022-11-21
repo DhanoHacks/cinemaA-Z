@@ -4,13 +4,16 @@ import re
 import pandas as pd
 import sys
 
+
 with Session() as s:
-    site = s.get("https://www.imdb.com/title/tt4633694/?ref_=nv_sr_srsg_0")
+   
+    site = s.get("https://www.imdb.com/title/")
     bs_content = bs(site.content, "html.parser")
-    # print(bs_content.prettify())
+    print(bs_content.prettify())
     content = bs_content.find_all("script",type="application/ld+json")
-    # print(content)
+    print(content)
     x = re.findall("{.*}", str(content))
+    print(x)
     items = x[0].split(",")
     res = {}
     count = 0
@@ -39,6 +42,8 @@ with Session() as s:
                 res["cast"].append(items[i].split("\":\"")[1].replace("}","").replace('"',"").replace("]",""))
         if '"ratingValue"' in items[i]:
             res["rating"]  = items[i].split("\":")[1].replace("}","")
+        if '"description"' in items[i]:
+            res["plot"] = items[i].split("\":\"")[1].replace('"',"")
 
     for i in res:        
         print(i,":",res[i])
