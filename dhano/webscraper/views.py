@@ -29,14 +29,14 @@ def save(response):
 
 
     # Getting English translated titles from the movies
-    headers = {'Accept-Language': 'en-US, en;q=0.5'}
+    # headers = {'Accept-Language': 'en-US, en;q=0.5'}
 
     pages = np.arange(1,1001,50)
 
     # Storing each of the urls of 50 movies 
     for page in pages:
         # Getting the contents from the each url
-        page = requests.get('https://www.imdb.com/search/title/?groups=top_1000&start=' + str(page) + '&ref_=adv_nxt', headers=headers)
+        page = requests.get('https://www.imdb.com/search/title/?groups=top_1000&start=' + str(page) + '&ref_=adv_nxt')
         soup = BeautifulSoup(page.text, 'html.parser')
         
         # Aiming the part of the html we want to get the information from
@@ -82,10 +82,14 @@ def save(response):
             casts.append(stars)
 
             #Scraping the image url
-            imageurl = re.findall("https:.*\.jpg", str(container))
+            imageurl = re.findall("https:.*?_V1_", str(container))[0]+".jpg"
             images.append(imageurl)
 
-            m = MovieData(name=name,site_link="",rating=imdb,plot=plot,language=["English",],similar=dict()
+            #Getting inside the page
+            movieurl = 'https://www.imdb.com' + str(re.findall("\"/title/.*?\"", str(container))[0].replace('"',""))
+            movieurls.append(movieurl)
+
+            m = MovieData(name=name,site_link=movieurl,rating=imdb,plot=plot,language=["English",],similar=dict()
             ,year_of_release=year,duration=runtime,genre=genre.split(", "),cast=stars,reviews=dict()
             ,platform=["Netflix",],image_url=imageurl)
             m.save()
