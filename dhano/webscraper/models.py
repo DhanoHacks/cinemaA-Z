@@ -5,7 +5,7 @@ class MovieData(models.Model):
     name = models.CharField(max_length=80)
     site_link = models.CharField(max_length=200)
     
-    rating = models.FloatField()
+    rating = models.JSONField()
     plot = models.CharField(max_length=1000)
     language = models.JSONField()
     similar = models.JSONField()
