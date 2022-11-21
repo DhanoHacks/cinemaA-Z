@@ -5,13 +5,17 @@ from requests import get
 from bs4 import BeautifulSoup
 from time import sleep
 from random import randint
+import re
 
 titles = []
 years = []
 time = []
 imdb_ratings = []
 genres = []
-
+plots = []
+casts = []
+images = []
+movieurls = []
 
 
 # Getting English translated titles from the movies
@@ -56,14 +60,39 @@ for page in pages:
         imdb = float(container.strong.text)
         imdb_ratings.append(imdb)
 
+        # Scraping the plot
+        plot = container.find_all('p', class_='text-muted')[1].text.lstrip().rstrip()
+        plots.append(plot)
+
+        # Scraping the cast
+        castlist = container.find_all('a')
+        stars = []
+        for cast in castlist[13:len(castlist)-1]:
+
+            stars.append(cast.text)
+        casts.append(stars)
+
+        #Scraping the image url
+        imageurl = re.findall("https:.*\.jpg", str(container))
+        images.append(imageurl)
+        
+        #Getting inside the page
+        movieurl = re.findall("\"/title/.*?\"", str(container))[0].replace('"',"")
+        movieurls.append('https://www.imdb.com' + str(movieurl))
+
 
 
 
 movies = pd.DataFrame({'movie':titles,
+                        'url':movieurls,
                        'year':years,
                        'time_minute':time,
                        'genres':genres,
-                       'imdb_rating':imdb_ratings})
+                       'imdb_rating':imdb_ratings,
+                       'plot':plots,
+                       'cast':casts,
+                       'image':images,
+                       })
 
 movies.head()
 
