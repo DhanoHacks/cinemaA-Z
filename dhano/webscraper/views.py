@@ -21,6 +21,10 @@ def save(response):
     time = []
     imdb_ratings = []
     genres = []
+    plots = []
+    casts = []
+    images = []
+    movieurls = []
 
 
 
@@ -65,6 +69,24 @@ def save(response):
             imdb = float(container.strong.text)
             imdb_ratings.append(imdb)
 
-            m = MovieData(name=name,site_link="",rating=imdb,plot="",language=["English",],similar=dict(),year_of_release=year,duration=runtime,genre=genre.split(", "),cast=dict(),reviews=dict(),platform=["Netflix",])
+            # Scraping the plot
+            plot = container.find_all('p', class_='text-muted')[1].text.lstrip().rstrip()
+            plots.append(plot)
+
+            # Scraping the cast
+            castlist = container.find_all('a')
+            stars = []
+            for cast in castlist[13:len(castlist)-1]:
+
+                stars.append(cast.text)
+            casts.append(stars)
+
+            #Scraping the image url
+            imageurl = re.findall("https:.*\.jpg", str(container))
+            images.append(imageurl)
+
+            m = MovieData(name=name,site_link="",rating=imdb,plot=plot,language=["English",],similar=dict()
+            ,year_of_release=year,duration=runtime,genre=genre.split(", "),cast=stars,reviews=dict()
+            ,platform=["Netflix",],image_url=imageurl)
             m.save()
     return HttpResponse("Finished Scraping")

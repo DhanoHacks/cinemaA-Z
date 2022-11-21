@@ -15,6 +15,7 @@ class MovieData(models.Model):
     cast = models.JSONField()
     reviews = models.JSONField()
     platform = models.JSONField()
+    image_url = models.CharField(max_length=1000)
 
     def __str__(self):
         return self.name
