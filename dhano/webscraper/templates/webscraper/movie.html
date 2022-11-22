@@ -2,7 +2,8 @@
 <html>
   <head>
     <title class="movieName">{{ m.name }}</title>
-    <link rel="stylesheet" href="stylesheet.css" />
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stylesheet.css' %}" />
     <!-- Latest compiled and minified CSS -->
     <link
       rel="stylesheet"
@@ -38,7 +39,7 @@
           <div class="col-lg-4 img">
             <img
               class="img"
-              src="m.im"
+              src="{{ m.image_url }}"
               width="100%"
               height="auto"
               style="padding-bottom: 10px"
@@ -48,7 +49,7 @@
           <div class="col-lg-4">
             <h3 >Ratings</h3>
             <ul style="list-style: none; padding-left: 10px; font-size: 15px">
-              <li class="imdb"><a href="{{ m.site_link }}">Imbd: {{ m.rating }}</a></li>
+              <li class="imdb"><a href="{{ m.site_link }}" target="_blank">Imbd: {{ m.rating }}</a></li>
               <li class="rt">Rotten Tomatoes:</li>
               <li class="metacritic">Metacritic:</li>
             </ul>
@@ -76,7 +77,7 @@
             </ul>
 
             <h4 class="year">Year of release: {{ m.year_of_release }}</h4>
-            <h4 class="duration">Duration: {{ duration }} minutes</h4>
+            <h4 class="duration">Duration: {{ m.duration }} minutes</h4>
             <h4 class="Genre">Genre: {% for g in m.genre %}
               {{ g }}, 
               {% endfor %}

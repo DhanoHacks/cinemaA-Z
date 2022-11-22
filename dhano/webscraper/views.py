@@ -3,17 +3,15 @@ from django.http import HttpResponse
 
 from .models import MovieData
 
-import pandas as pd
 import numpy as np
 import requests
-from requests import get
 from bs4 import BeautifulSoup
 from time import sleep
 from random import randint
 import re
 
-def index(response):
-    m = MovieData.objects.get(id=1)
+def index(response,id):
+    m = MovieData.objects.get(id=id)
     return render(response, "webscraper/movie.html", {"m":m})
 
 def save(response):
