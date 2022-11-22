@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title class="loginPage">Login Page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stylesheet.css' %}" />
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div class="top container-fluid">
+      <div class="rows">
+        <div class="col-lg-6">
+          <h3 style="padding-bottom: 3px"><b>DATr</b></h3>
+        </div>
+        <div class="col-lg-4 search">
+          <input type="text" placeholder="Search.." />
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+        <div class="col-lg-2 links">
+          <p>Login, watchlist, watched, liked</p>
+        </div>
+      </div>
+    </div>
+
+    <div style="background-color: #aaa; padding-top: 20px; padding-bottom: 20px">
+      <div class="container mainData">
+        <form method="POST" >
+            {% csrf_token %}
+            {{form}}
+            <button type="submit">Register</button>
+        </form>
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
