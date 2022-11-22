@@ -49,8 +49,8 @@
           <div class="col-lg-4">
             <h3 >Ratings</h3>
             <ul style="list-style: none; padding-left: 10px; font-size: 15px">
-              <li class="imdb"><a href="{{ m.site_link }}" target="_blank">Imbd: {{ m.rating }}</a></li>
-              <li class="rt">Rotten Tomatoes:</li>
+              <li class="imdb"><a href="{{ m.site_link.imdb }}" target="_blank">Imbd: {{ m.rating.imdb }}</a></li>
+              <li class="rt"><a href="{{ m.site_link.rotten_tomatoes }}" target="_blank">Rotten Tomatoes: {{ m.rating.rotten_tomatoes }}</a></li>
               <li class="metacritic">Metacritic:</li>
             </ul>
 
@@ -85,16 +85,17 @@
             <h3 class="movies/tvshows">Similar movies and TV shows:</h3>
             
             <ul class="listofmovtv">
-              <li>Spider-man</li>
-              <li>Amazing spiderman</li>
-              <li>Spiderman: No way home</li>
+              {% for s in m.similar %}
+              <li>{{ s }}</li>
+              {% endfor %}
             </ul>
 
             <h3>Where to Watch</h3>
 
             <ul class="platforms">
-              <li>Amazon prime</li>
-              <li>Netflix</li>
+              {% for p in m.platform %}
+              <li>{{ p }}</li>
+              {% endfor %}
             </ul>
           </div>
         </div>
@@ -103,61 +104,32 @@
             <h1>User Reviews:</h1>
           </div>
         </div>
+        {% for r in m.reviews.good_reviews %}
         <div class="row">
           <div class="col-lg-2" style="text-align: left">
-            <p>&nbsp Review 1 :</p>
-            <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p>
+            <p>&nbsp Good Review {{ forloop.counter }} :</p>
+            <!-- <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p> -->
           </div>
           <div class="col-lg-10">
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
-              voluptatem ratione suscipit reiciendis, quisquam nemo, culpa
-              delectus similique voluptate autem accusantium sequi? A ipsam
-              aspernatur perspiciatis molestias illo molestiae corporis. Lorem
-              ipsum dolor sit amet consectetur adipisicing elit. Eos earum iste
-              doloremque cupiditate? Quibusdam, temporibus. Nesciunt harum sed
-              voluptatum id doloremque facere reprehenderit architecto ad! Harum
-              vero tenetur praesentium hic?
+              {{ r }}
             </p>
           </div>
         </div>
+        {% endfor %}
+        {% for r in m.reviews.bad_reviews %}
         <div class="row">
-            <div class="col-lg-2" style="text-align: left">
-              <p>&nbsp Review 2 :</p>
-              <p>&nbsp&nbsp&nbsp&nbspRating = 6/10</p>
-            </div>
-            <div class="col-lg-10">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
-                voluptatem ratione suscipit reiciendis, quisquam nemo, culpa
-                delectus similique voluptate autem accusantium sequi? A ipsam
-                aspernatur perspiciatis molestias illo molestiae corporis. Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Eos earum iste
-                doloremque cupiditate? Quibusdam, temporibus. Nesciunt harum sed
-                voluptatum id doloremque facere reprehenderit architecto ad! Harum
-                vero tenetur praesentium hic?
-              </p>
-            </div>
+          <div class="col-lg-2" style="text-align: left">
+            <p>&nbsp Bad Review {{ forloop.counter }} :</p>
+            <!-- <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p> -->
           </div>
-          <div class="row">
-            <div class="col-lg-2" style="text-align: left">
-              <p>&nbsp Review 3 :</p>
-              <p>&nbsp&nbsp&nbsp&nbspRating = 3/10</p>
-            </div>
-            <div class="col-lg-10">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae
-                voluptatem ratione suscipit reiciendis, quisquam nemo, culpa
-                delectus similique voluptate autem accusantium sequi? A ipsam
-                aspernatur perspiciatis molestias illo molestiae corporis. Lorem
-                ipsum dolor sit amet consectetur adipisicing elit. Eos earum iste
-                doloremque cupiditate? Quibusdam, temporibus. Nesciunt harum sed
-                voluptatum id doloremque facere reprehenderit architecto ad! Harum
-                vero tenetur praesentium hic?
-              </p>
-            </div>
+          <div class="col-lg-10">
+            <p>
+              {{ r }}
+            </p>
           </div>
-            
+        </div>
+        {% endfor %}  
       </div>
     </div>
     <script src="script.js"></script>
