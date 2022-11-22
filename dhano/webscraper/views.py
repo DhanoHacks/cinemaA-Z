@@ -335,3 +335,7 @@ def search_results_view(response):
                 ,reviews=review_for_one_movie,platform=platform_for_one_movie,image_url=imageurl)
                 m.save()
                 return render(response, "webscraper/movie.html", {"m":m})
+
+
+def home(response):
+    return render(response, "webscraper/index.html", {})
