@@ -1,10 +1,67 @@
 <!DOCTYPE html>
 
 <html>
-    <head>
-        <title>My website</title>
-    </head>
-    <body>
-        <p>{{name}}</p>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width-device-width, initial-scale = 1, shrink-to-fit-no"
+    />
+    <style type="text/css">
+      .sidenav {
+        height: 100%;
+        width: 160px;
+        position: fixed;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        padding-top: 20px;
+      }
+
+      .sidenav a {
+        padding: 6px 8px 6px 16px;
+        text-decoration: none;
+        color: #818181;
+        font-size: 25px;
+        display: block;
+      }
+
+      .sidenav a:hover {
+        color: #f1f1f1;
+      }
+
+      .main {
+        margin-left: 160px;
+        padding: 0px 10px;
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+    <title>{% block title %} default title {% endblock %}</title>
+  </head>
+  <body>
+    <div class="sidenav">
+      <!--Side bar-->
+      <a href="/">Home</a>
+      <a href="/create">Create</a>
+      <a href="/2">View</a>
+    </div>
+
+    <div id="content" name="content" class="main">
+      <div class="row justify-content-center">
+        <div class="col-8">
+            <h1 class="mt-2">My site</h1>
+            <hr class="mt-0 mb-4">
+            {% block content %}
+            {% endblock %}
+        </div>
+      </div>
+    </div>
+  </body>
 </html>
