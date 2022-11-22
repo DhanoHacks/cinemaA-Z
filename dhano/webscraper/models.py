@@ -3,7 +3,7 @@ from django.db import models
 
 class MovieData(models.Model):
     name = models.CharField(max_length=80)
-    site_link = models.CharField(max_length=200)
+    site_link = models.JSONField()
     
     rating = models.JSONField()
     plot = models.CharField(max_length=1000)

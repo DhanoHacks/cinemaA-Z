@@ -24,6 +24,14 @@ def save(response):
     casts = []
     images = []
     movieurls = []
+    reviews = []
+    platforms = []
+    similar_movies = []
+    languages = []
+    rotten_tomato_ratings = []
+    metascore = []
+    metacritic_urls = []
+    rotten_tomato_urls = []
 
 
 
@@ -88,8 +96,57 @@ def save(response):
             movieurl = 'https://www.imdb.com' + str(re.findall("\"/title/.*?\"", str(container))[0].replace('"',""))
             movieurls.append(movieurl)
 
-            m = MovieData(name=name,site_link=movieurl,rating=imdb,plot=plot,language=["English",],similar=dict()
-            ,year_of_release=year,duration=runtime,genre=genre.split(", "),cast=stars,reviews=dict()
-            ,platform=["Netflix",],image_url=imageurl)
+            sleep(randint(3,10))
+            insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=10")
+            soup1 = BeautifulSoup(insidepage.text, 'html.parser')
+
+            # print(soup1.text)
+
+            review_for_one_movie = {"good reviews":[],"bad reviews":[]}
+            review_div = soup1.find_all('div' , class_="text show-more__control")
+            for review in review_div[0:5]:
+                review_for_one_movie["good reviews"].append(review.text)
+
+            insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=3")
+            soup1 = BeautifulSoup(insidepage.text, 'html.parser')
+            review_div = soup1.find_all('div' , class_="text show-more__control")
+            for review in review_div[0:5]:
+                review_for_one_movie["bad reviews"].append(review.text.replace("\\",""))
+
+            reviews.append(review_for_one_movie)
+
+            #Rotten tomatoes url
+
+            sleep(randint(3,10))
+            rotten_tomato_url = "https://www.rottentomatoes.com/m/" + str(re.sub("[^a-z]","",name.lower().replace(" ","_"))) + "_" + str(year)
+            rotten_tomato_urls.append(rotten_tomato_url)
+            rotten_tomato_page = requests.Session().get(rotten_tomato_url)
+            soup1 = BeautifulSoup(rotten_tomato_page.text, 'html.parser')
+
+            # print(soup1.prettify())
+
+            platform_for_one_movie = []
+            where_to_watch = soup1.find_all('where-to-watch-meta')
+            for place in where_to_watch:
+                platform = re.findall("\".*?\"", str(place))[0].replace('"',"")
+                platform_for_one_movie.append(platform)
+
+            platforms.append(platform_for_one_movie)
+
+            similar_for_movie = []
+            similar = soup1.find_all('span' , class_="p--small")
+            for elem in similar:
+                similar_for_movie.append(elem.text.replace('"',""))
+            similar_movies.append(similar_for_movie)
+
+            language = soup1.find_all('div',class_="meta-value")[2]
+            languages.append(language.text.rstrip())
+
+            rotten_tomato_rating = int(re.findall("\"ratingValue\":\".*?\"",str(soup1))[0].replace('"ratingValue":',"").replace('"',''))
+            rotten_tomato_ratings.append(rotten_tomato_rating)
+
+            m = MovieData(name=name,site_link={"imdb":movieurl,"rotten tomatoes":rotten_tomato_url},rating={"imdb":imdb,"rotten tomatoes":rotten_tomato_rating},plot=plot,language=language.text.rstrip().split(", "),similar=similar_for_movie
+            ,year_of_release=year,duration=runtime,genre=genre.split(", "),cast=stars,reviews=review_for_one_movie
+            ,platform=platform_for_one_movie,image_url=imageurl)
             m.save()
     return HttpResponse("Finished Scraping")
