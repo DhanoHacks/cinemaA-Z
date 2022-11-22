@@ -1,0 +1,28 @@
+.top{
+    background-color:blanchedalmond;
+}
+
+.top input{
+    padding : 6px;
+    margin-top: 11px;
+    font-size : 17px;
+    border : 1px solid #ccc;
+}
+
+.top button{
+    padding : 7px 10px;
+}
+
+.mainData{
+    border: 5px solid #000;
+    background-color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.movieName{
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.user{
+    margin-top: 0px;
+}

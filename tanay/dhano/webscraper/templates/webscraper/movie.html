@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title class="movieName">{{ m.name }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stylesheet.css' %}" />
+    <!-- Latest compiled and minified CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div class="top container-fluid">
+      <div class="rows">
+        <div class="col-lg-6">
+          <h3 style="padding-bottom: 3px"><b>DATr</b></h3>
+        </div>
+        <div class="col-lg-4 search">
+          <input type="text" placeholder="Search.." />
+          <button type="submit"><i class="fa fa-search"></i></button>
+        </div>
+        <div class="col-lg-2 links">
+          <p>Login, watchlist, watched, liked</p>
+        </div>
+      </div>
+    </div>
+    <div
+      style="background-color: #aaa; padding-top: 20px; padding-bottom: 20px"
+    >
+      <div class="container mainData">
+        <h1 class="movieName">{{ m.name }}</h1>
+        <div class="row">
+          <div class="col-lg-4 img">
+            <img
+              class="img"
+              src="{{ m.image_url }}"
+              width="100%"
+              height="auto"
+              style="padding-bottom: 10px"
+              alt="Image Not Available"
+            />
+          </div>
+          <div class="col-lg-4">
+            <h3 >Ratings</h3>
+            <ul style="list-style: none; padding-left: 10px; font-size: 15px">
+              <li class="imdb"><a href="{{ m.site_link.imdb }}" target="_blank">Imbd: {{ m.rating.imdb }}</a></li>
+              <li class="rt"><a href="{{ m.site_link.rotten_tomatoes }}" target="_blank">Rotten Tomatoes: {{ m.rating.rotten_tomatoes }}</a></li>
+              <li class="metacritic">Metacritic:</li>
+            </ul>
+
+            <h3>Plot</h3>
+            <p class="tab1 Plot">
+              {{ m.plot }}
+            </p>
+
+            <h3>Cast</h3>
+            <ul class = "Cast">
+              {% for c in m.cast %}
+              <li>{{ c }}</li>
+              {% endfor %}
+            </ul>
+
+
+          </div>
+          <div class="col-lg-4">
+            <h3>Languages:</h3>
+            <ul class="languages">
+              {% for l in m.language %}
+              <li>{{ l }}</li>
+              {% endfor %}
+            </ul>
+
+            <h4 class="year">Year of release: {{ m.year_of_release }}</h4>
+            <h4 class="duration">Duration: {{ m.duration }} minutes</h4>
+            <h4 class="Genre">Genre: {% for g in m.genre %}
+              {{ g }}, 
+              {% endfor %}
+            </h4>
+            <h3 class="movies/tvshows">Similar movies and TV shows:</h3>
+            
+            <ul class="listofmovtv">
+              {% for s in m.similar %}
+              <li>{{ s }}</li>
+              {% endfor %}
+            </ul>
+
+            <h3>Where to Watch</h3>
+
+            <ul class="platforms">
+              {% for p in m.platform %}
+              <li>{{ p }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <h1>User Reviews:</h1>
+          </div>
+        </div>
+        {% for r in m.reviews.good_reviews %}
+        <div class="row">
+          <div class="col-lg-2" style="text-align: left">
+            <p>&nbsp Good Review {{ forloop.counter }} :</p>
+            <!-- <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p> -->
+          </div>
+          <div class="col-lg-10">
+            <p>
+              {{ r }}
+            </p>
+          </div>
+        </div>
+        {% endfor %}
+        {% for r in m.reviews.bad_reviews %}
+        <div class="row">
+          <div class="col-lg-2" style="text-align: left">
+            <p>&nbsp Bad Review {{ forloop.counter }} :</p>
+            <!-- <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p> -->
+          </div>
+          <div class="col-lg-10">
+            <p>
+              {{ r }}
+            </p>
+          </div>
+        </div>
+        {% endfor %}  
+      </div>
+    </div>
+    <script src="script.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
