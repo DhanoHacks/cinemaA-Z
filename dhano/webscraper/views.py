@@ -13,7 +13,8 @@ from random import randint
 import re
 
 def index(response):
-    return HttpResponse("Dhano was here!")
+    m = MovieData.objects.get(id=1)
+    return render(response, "webscraper/movie.html", {"m":m})
 
 def save(response):
     titles = []
