@@ -22,8 +22,10 @@
           <h3 style="padding-bottom: 3px"><b>DATr</b></h3>
         </div>
         <div class="col-lg-4 search">
-          <input type="text" placeholder="Search.." />
-          <button type="submit"><i class="fa fa-search"></i></button>
+          <form action="{% url 'search_results' %}" method="get">
+            <input name="q" type="text" placeholder="Search.." />
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
         </div>
         <div class="col-lg-2 links">
           <p>Login, watchlist, watched, liked</p>
@@ -51,7 +53,7 @@
             <ul style="list-style: none; padding-left: 10px; font-size: 15px">
               <li class="imdb"><a href="{{ m.site_link.imdb }}" target="_blank">Imbd: {{ m.rating.imdb }}</a></li>
               <li class="rt"><a href="{{ m.site_link.rotten_tomatoes }}" target="_blank">Rotten Tomatoes: {{ m.rating.rotten_tomatoes }}</a></li>
-              <li class="metacritic">Metacritic:</li>
+              <li class="metacritic"><a href="{{ m.site_link.metacritic }}" target="_blank">Metacritic: {{ m.rating.metacritic }}</a></li>
             </ul>
 
             <h3>Plot</h3>

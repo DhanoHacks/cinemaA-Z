@@ -17,8 +17,11 @@ from django.contrib import admin
 from django.urls import path, include
 from register import views as v
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("webscraper.urls")),
-    path('register/', v.register, name="register" )
+    path('register/', v.register, name="register"),
+    path('user/', v.user, name="user"),
+    path('', include("django.contrib.auth.urls")),
 ]
