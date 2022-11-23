@@ -8,3 +8,7 @@ Usage:
 - Go to the local ip/port indicated by manage.py, and choose either `register` or `login` (if new user)
 - After loggin in, go to any movie of your choice using the ip format (`localhost_ip/any_number_from_1_to_50`)
 - Functioning Search Bar on every movie page, capable of searching within, and out of the database
+
+Requirements:
+- django
+- crispy forms, using `pip install crispy-bootstrap5`
