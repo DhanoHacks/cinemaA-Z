@@ -342,3 +342,6 @@ def search_results_view(response):
 
 def home(response):
     return render(response, "webscraper/index.html", {})
+
+def watched(response):
+    print(response.user)
