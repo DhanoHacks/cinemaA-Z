@@ -22,4 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("webscraper.urls")),
     path('register/', v.register, name="register"),
+    path('user/', v.user, name="user"),
+    path('', include("django.contrib.auth.urls")),
 ]
