@@ -10,6 +10,9 @@ from time import sleep
 from random import randint
 import re
 
+def temp(response):
+    return HttpResponse("<h1><a href='/register'> Register </a> <br> <a href='/login'> Login </a></h1>")
+
 def index(response,id):
     m = MovieData.objects.get(id=id)
     return render(response, "webscraper/movie.html", {"m":m})
