@@ -22,8 +22,10 @@
           <h3 style="padding-bottom: 3px"><b>DATr</b></h3>
         </div>
         <div class="col-lg-4 search">
-          <input type="text" placeholder="Search.." />
-          <button type="submit"><i class="fa fa-search"></i></button>
+          <form action="{% url 'search_results' %}" method="get">
+            <input name="q" type="text" placeholder="Search.." />
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
         </div>
         <div class="col-lg-2 links">
           {% if user.is_authenticated%}
