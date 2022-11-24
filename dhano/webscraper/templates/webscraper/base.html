@@ -26,11 +26,11 @@
           <button type="submit"><i class="fa fa-search"></i></button>
         </div>
         <div class="col-lg-2 links">
-          <h5><a href="/home/">Home</a>
           {% if user.is_authenticated%}
-          | <a href="/user/">Profile</a> | <a href="/logout/">Logout</a>
+            <h5> <a href="/home/">Home</a> | <a href="/user/">Profile</a> | <a href="/logout/">Logout</a></h5>
+          {% else %}
+            <h5> <a href="/home/">Home</a> | <a href="/login">Log in</a> | <a href="/register/">Sign up</a></h5>
           {% endif %}
-          </h5>
         </div>
       </div>
     </div>
