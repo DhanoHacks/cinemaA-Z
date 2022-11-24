@@ -20,7 +20,6 @@ class MovieData(models.Model):
 
     def __str__(self):
         return self.name
-
 class List(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.CharField(max_length=20)
