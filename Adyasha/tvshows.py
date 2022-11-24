@@ -113,11 +113,11 @@ for page in pages:
         #Rotten tomatoes url
 
         sleep(randint(3,10))
-        rotten_tomato_url = "https://www.rottentomatoes.com/m/" + str(name.lower().replace(" ","_")) + "_" + str(year).replace("(","").replace(")","")
+        rotten_tomato_url = "https://www.rottentomatoes.com/m/" + str(name.lower().replace(" ","_")) 
         rotten_tomato_urls.append(rotten_tomato_url)
         rotten_tomato_page = requests.Session().get(rotten_tomato_url)
         soup1 = bs(rotten_tomato_page.text, 'html.parser')
-
+        print(rotten_tomato_url)
         # print(soup1.prettify())
 
         platform_for_one_show = []
@@ -134,24 +134,25 @@ for page in pages:
             similar_for_show.append(elem.text.replace('"',""))
         similar_shows.append(similar_for_show)
 
-        language = soup1.find_all('div',class_="meta-value")[2]
-        languages.append(language.text.rstrip())
+        # language = soup1.find_all('div',class_="meta-value")[2]
+        # languages.append(language.text.rstrip())
 
-        rotten_tomato_rating = int(re.findall("\"ratingValue\":\".*?\"",str(soup1))[0].replace('"ratingValue":',"").replace('"',''))
-        rotten_tomato_ratings.append(rotten_tomato_rating)
+        # rotten_tomato_rating = int(re.findall("\"ratingValue\":\".*?\"",str(soup1))[0].replace('"ratingValue":',"").replace('"',''))
+        # rotten_tomato_ratings.append(rotten_tomato_rating)
 
-#         #metacritic url
+        #metacritic url
 
-#         sleep(randint(3,5))
-#         metacritic_url = "https://www.metacritic.com/show/" + str(name.lower().replace(" ","-"))
-#         metacritic_urls.append(metacritic_url)
-#         user_agent = {'User-agent': 'Mozilla/5.0'}
-#         metacritic_page  = requests.get(metacritic_url,headers = user_agent)
-#         soup2 = bs(metacritic_page.text, 'html.parser')
+        sleep(randint(3,5))
+        metacritic_url = "https://www.metacritic.com/tv/" + str(name.lower().replace(" ","-"))
+        metacritic_urls.append(metacritic_url)
+        print(metacritic_url)
+        user_agent = {'User-agent': 'Mozilla/5.0'}
+        metacritic_page  = requests.get(metacritic_url,headers = user_agent)
+        soup2 = bs(metacritic_page.text, 'html.parser')
 
-#         # print(soup2.prettify())
-#         metascore = soup2.find_all('span', class_="metascore_w header_size show positive")[0]
-#         metascores.append(metascore.text)
+        print(soup2.prettify())
+        metascore = soup2.find_all('span', class_="metascore_w header_size tvshow positive")[0]
+        metascores.append(metascore.text)
 
 
 
