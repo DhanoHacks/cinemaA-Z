@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import MovieData
+from .models import MovieData, List
 
 import numpy as np
 import requests
@@ -22,6 +22,29 @@ def index(response,id):
         else:
             sim.append({"mname":s,"mid":"notfound"})
     print(sim)
+    if response.method == "POST" :
+        if response.POST.get("watched"):
+            watched = List.objects.get(type="watched")
+            items = watched.items_set.all().filter(text=m.name, user=response.user)
+            if len(items) == 0:
+                watched.items_set.create(text = m.name, user=response.user)
+            elif len(items) == 1:
+                items[0].delete()
+
+        elif response.POST.get("like"):
+            liked = List.objects.get(type="liked")
+            items = liked.items_set.all().filter(text=m.name, user=response.user)
+            if len(items) == 0:
+                liked.items_set.create(text = m.name, user=response.user)
+            elif len(items) == 1:
+                items[0].delete()
+        elif response.POST.get("watchlist"):
+            watchlist = List.objects.get(type="watchlist")
+            items = watchlist.items_set.all().filter(text=m.name, user=response.user)
+            if len(items) == 0:
+                watchlist.items_set.create(text = m.name, user=response.user)
+            elif len(items) == 1:
+                items[0].delete()
     return render(response, "webscraper/movie.html", {"m":m,"sim":sim})
 
 def save(response):
@@ -456,4 +479,30 @@ def search_results_view(response):
 
 
 def home(response):
-    return render(response, "webscraper/index.html", {})
+    if not List.objects.filter(type="watched").exists():
+        watched = List(type = "watched")
+        watched.save()
+    if not List.objects.filter(type="watchlist").exists():
+        watchlist = List(type="watchlist")
+        watchlist.save()
+    if not List.objects.filter(type="liked").exists():
+        liked = List(type="liked")
+        liked.save()
+
+    list = List.objects.filter(type="watched")
+    watched = []
+    for movie in list[0].items_set.all():
+        if(movie.user == response.user):
+            watched.append(movie)
+    list = List.objects.filter(type="watchlist")
+    watchlist = []
+    for movie in list[0].items_set.all():
+        if(movie.user == response.user):
+            watchlist.append(movie)
+    list = List.objects.filter(type="liked")
+    liked = []
+    for movie in list[0].items_set.all():
+        if(movie.user == response.user):
+            liked.append(movie)
+    
+    return render(response, "webscraper/index.html", {"watched":watched, "watchlist":watchlist, "liked":liked})

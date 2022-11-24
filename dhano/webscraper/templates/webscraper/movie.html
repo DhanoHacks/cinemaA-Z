@@ -1,150 +1,161 @@
-{% extends "webscraper/base.html" %}
-
-{% block title%}
-{{m.name}}
-{% endblock %}
-
+{% extends "webscraper/base.html" %} {% block title%} {{m.name}} {% endblock %}
 {% block content %}
 
-  <h1 class="movieName">{{ m.name }}</h1>
-  <div class="row">
-    <div class="col-lg-4 img">
-      <img
-        class="img"
-        src="{{ m.image_url }}"
-        width="100%"
-        height="auto"
-        style="padding-bottom: 10px"
-        alt="Image Not Available"
-      />
-    </div>
-    <div class="col-lg-4">
-      <h3 >Ratings</h3>
-      <ul style="list-style: none; padding-left: 10px; font-size: 15px">
-        <li class="imdb"><a href="{{ m.site_link.imdb }}" target="_blank">Imbd: {{ m.rating.imdb }}</a></li>
-        <li class="rt"><a href="{{ m.site_link.rotten_tomatoes }}" target="_blank">Rotten Tomatoes: {{ m.rating.rotten_tomatoes }}</a></li>
-        <li class="metacritic"><a href="{{ m.site_link.metacritic }}" target="_blank">Metacritic: {{ m.rating.metacritic }}</a></li>
-      </ul>
+<h1 class="movieName">{{ m.name }}</h1>
+<div class="row">
+  <div class="col-lg-4 img">
+    <img
+      class="img"
+      src="{{ m.image_url }}"
+      width="100%"
+      height="auto"
+      style="padding-bottom: 10px"
+      alt="Image Not Available"
+    />
+  </div>
+  <div class="col-lg-4">
+    <h3>Ratings</h3>
+    <ul style="list-style: none; padding-left: 10px; font-size: 15px">
+      <li class="imdb">
+        <a href="{{ m.site_link.imdb }}" target="_blank"
+          >Imbd: {{ m.rating.imdb }}</a
+        >
+      </li>
+      <li class="rt">
+        <a href="{{ m.site_link.rotten_tomatoes }}" target="_blank"
+          >Rotten Tomatoes: {{ m.rating.rotten_tomatoes }}</a
+        >
+      </li>
+      <li class="metacritic">
+        <a href="{{ m.site_link.metacritic }}" target="_blank"
+          >Metacritic: {{ m.rating.metacritic }}</a
+        >
+      </li>
+    </ul>
 
-      <h3>Plot</h3>
-      <p class="tab1 Plot">
-        {{ m.plot }}
-      </p>
+    <h3>Plot</h3>
+    <p class="tab1 Plot">{{ m.plot }}</p>
 
-      <h3>Cast</h3>
-      <ul class = "Cast">
-        {% for c in m.cast %}
-        <li>{{ c }}</li>
-        {% endfor %}
-      </ul>
+    <h3>Cast</h3>
+    <ul class="Cast">
+      {% for c in m.cast %}
+      <li>{{ c }}</li>
+      {% endfor %}
+    </ul>
+    {% if user.is_authenticated %}
+    <form method="post" action="/{{m.id}}">
+      {% csrf_token %}
+      <button type="submit" name="watched" value="watched">Watched</button>
+      <button type="submit" name="watchlist" value="watchlist">
+        Watchlist
+      </button>
+      <button type="submit" name="like" value="like">Like</button>
+    </form>
+    {% endif %}
+  </div>
+  <div class="col-lg-4">
+    <h3>Languages:</h3>
+    <ul class="languages">
+      {% for l in m.language %}
+      <li>{{ l }}</li>
+      {% endfor %}
+    </ul>
 
+    <h4 class="year">Year of release: {{ m.year_of_release }}</h4>
+    <h4 class="duration">Duration: {{ m.duration }} minutes</h4>
+    <h4 class="Genre">Genre: {% for g in m.genre %} {{ g }}, {% endfor %}</h4>
+    <h3 class="movies/tvshows">Similar movies and TV shows:</h3>
 
-    </div>
-    <div class="col-lg-4">
-      <h3>Languages:</h3>
-      <ul class="languages">
-        {% for l in m.language %}
-        <li>{{ l }}</li>
-        {% endfor %}
-      </ul>
+    <ul class="listofmovtv">
+      {% for s in sim %} {% if s.mid == "notfound" %}
+      <li>{{ s.mname }}</li>
+      {% else %}
+      <a href="/{{ s.mid }}"><li>{{ s.mname }}</li></a>
+      {% endif %} {% endfor %}
+    </ul>
 
-      <h4 class="year">Year of release: {{ m.year_of_release }}</h4>
-      <h4 class="duration">Duration: {{ m.duration }} minutes</h4>
-      <h4 class="Genre">Genre: {% for g in m.genre %}
-        {{ g }}, 
-        {% endfor %}
-      </h4>
-      <h3 class="movies/tvshows">Similar movies and TV shows:</h3>
-      
-      <ul class="listofmovtv">
-        {% for s in sim %}
-        
-        {% if s.mid == "notfound" %}
-        <li>{{ s.mname }}</li>
-        {% else %}
-        <a  href="/{{ s.mid }}"><li>{{ s.mname }}</li></a>
-        {% endif %}
-        {% endfor %}
-      </ul>
+    <h3>Where to Watch</h3>
 
-      <h3>Where to Watch</h3>
-
-      <ul class="platforms">
-        {% for p in m.platform %}
-        <li>{{ p }}</li>
-        {% endfor %}
-      </ul>
-    </div>
-    <!-- <form method="POST">
+    <ul class="platforms">
+      {% for p in m.platform %}
+      <li>{{ p }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <!-- <form method="POST">
       {% csrf_token %}
       <button type="submit">Watched</button>
     </form> -->
-    
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <h1>User Reviews:</h1>
   </div>
-  <div class="row">
-    <div class="col-lg-12">
-      <h1>User Reviews:</h1>
-    </div>
+</div>
+{% for r in m.reviews.good_reviews %}
+<div class="row">
+  <div class="col-lg-2" style="text-align: left">
+    <p>&nbsp Good Review {{ forloop.counter }} :</p>
+    <!-- <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p> -->
   </div>
-  {% for r in m.reviews.good_reviews %}
-  <div class="row">
-    <div class="col-lg-2" style="text-align: left">
-      <p>&nbsp Good Review {{ forloop.counter }} :</p>
-      <!-- <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p> -->
-    </div>
-    <div class="col-lg-10" style="margin-bottom:10px">
-      <p style="margin-bottom:0px"><span id="dots{{forloop.counter}}">{{r|truncatechars:100}}</span><span id="more{{forloop.counter}}" style="display:none">{{r}}</span>
-    <a onclick="myFunction({{forloop.counter}})" id="myBtn{{forloop.counter}}">Read more</a>
-      </p>
-    </div>
+  <div class="col-lg-10" style="margin-bottom: 10px">
+    <p style="margin-bottom: 0px">
+      <span id="dots{{forloop.counter}}">{{r|truncatechars:100}}</span
+      ><span id="more{{forloop.counter}}" style="display: none">{{r}}</span>
+      <a onclick="myFunction({{forloop.counter}})" id="myBtn{{forloop.counter}}"
+        >Read more</a
+      >
+    </p>
   </div>
-  {% endfor %}
-  {% for r in m.reviews.bad_reviews %}
-  <div class="row">
-    <div class="col-lg-2" style="text-align: left">
-      <p>&nbsp Bad Review {{ forloop.counter }} :</p>
-    </div>
-    <div class="col-lg-10" style="margin-bottom:10px">
-      <p style="margin-bottom:0px"><span id="dotsr{{forloop.counter}}">{{r|truncatechars:100}}</span><span id="morer{{forloop.counter}}" style="display:none">{{r}}</span>
-      <a onclick="myFunctionr({{forloop.counter}})" id="myBtnr{{forloop.counter}}">Read more</a>
-      </p>
-    </div>
+</div>
+{% endfor %} {% for r in m.reviews.bad_reviews %}
+<div class="row">
+  <div class="col-lg-2" style="text-align: left">
+    <p>&nbsp Bad Review {{ forloop.counter }} :</p>
   </div>
-  {% endfor %}  
-
-{% endblock %}
-
-{% block js %}
+  <div class="col-lg-10" style="margin-bottom: 10px">
+    <p style="margin-bottom: 0px">
+      <span id="dotsr{{forloop.counter}}">{{r|truncatechars:100}}</span
+      ><span id="morer{{forloop.counter}}" style="display: none">{{r}}</span>
+      <a
+        onclick="myFunctionr({{forloop.counter}})"
+        id="myBtnr{{forloop.counter}}"
+        >Read more</a
+      >
+    </p>
+  </div>
+</div>
+{% endfor %} {% endblock %} {% block js %}
 <script>
   function myFunction(x) {
-  var dots = document.getElementById("dots"+x);
-  var moreText = document.getElementById("more"+x);
-  var btnText = document.getElementById("myBtn"+x);
+    var dots = document.getElementById("dots" + x);
+    var moreText = document.getElementById("more" + x);
+    var btnText = document.getElementById("myBtn" + x);
 
-  if (dots.style.display === "none") {
-    dots.style.display = "inline";
-    btnText.innerHTML = "Read more"; 
-    moreText.style.display = "none";
-  } else {
-    dots.style.display = "none";
-    btnText.innerHTML = "Read less"; 
-    moreText.style.display = "inline";
+    if (dots.style.display === "none") {
+      dots.style.display = "inline";
+      btnText.innerHTML = "Read more";
+      moreText.style.display = "none";
+    } else {
+      dots.style.display = "none";
+      btnText.innerHTML = "Read less";
+      moreText.style.display = "inline";
+    }
   }
-}
   function myFunctionr(x) {
-  var dots = document.getElementById("dotsr"+x);
-  var moreText = document.getElementById("morer"+x);
-  var btnText = document.getElementById("myBtnr"+x);
+    var dots = document.getElementById("dotsr" + x);
+    var moreText = document.getElementById("morer" + x);
+    var btnText = document.getElementById("myBtnr" + x);
 
-  if (dots.style.display === "none") {
-    dots.style.display = "inline";
-    btnText.innerHTML = "Read more"; 
-    moreText.style.display = "none";
-  } else {
-    dots.style.display = "none";
-    btnText.innerHTML = "Read less"; 
-    moreText.style.display = "inline";
+    if (dots.style.display === "none") {
+      dots.style.display = "inline";
+      btnText.innerHTML = "Read more";
+      moreText.style.display = "none";
+    } else {
+      dots.style.display = "none";
+      btnText.innerHTML = "Read less";
+      moreText.style.display = "inline";
+    }
   }
-}
-</script>  
+</script>
 {% endblock %}

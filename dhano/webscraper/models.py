@@ -21,14 +21,14 @@ class MovieData(models.Model):
     def __str__(self):
         return self.name
 class List(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.CharField(max_length=20)
 
     def __str__(self):
-        return  self.name
+        return  self.type
 
 class Items(models.Model):
     list = models.ForeignKey(List, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     text = models.CharField(max_length=200)
     
     def __str__(self):

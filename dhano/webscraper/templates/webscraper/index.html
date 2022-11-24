@@ -8,4 +8,31 @@
 <p>Top 10 shows</p>
 <p>Carousel daalna hai</p>
 <p>featured shows</p>
+<h4>Watched</h4>
+<ul>
+
+  {%for movies in watched%}
+    <li>{{movies}}</li>
+  {% endfor %}
+
+</ul>
+
+<h4>Watchlist</h4>
+<ul>
+
+  {%for movies in watchlist%}
+    <li>{{movies}}</li>
+  {% endfor %}
+
+</ul>
+
+<h4>Liked</h4>
+<ul>
+
+  {%for movies in liked%}
+    <li>{{movies}}</li>
+  {% endfor %}
+  
+
+</ul>
 {% endblock %}
