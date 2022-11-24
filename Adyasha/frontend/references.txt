@@ -1,0 +1,3 @@
+https://blog.hubspot.com/website/bootstrap-carousel-css
+https://www.kaggle.com/code/akdagmelih/web-scraper-imdb-movies
+https://stackoverflow.com/questions/48824568/bootstrap-4-carousel-sliders-not-working
