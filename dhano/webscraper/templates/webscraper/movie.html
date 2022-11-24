@@ -92,9 +92,9 @@
       <p>&nbsp Good Review {{ forloop.counter }} :</p>
       <!-- <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p> -->
     </div>
-    <div class="col-lg-10">
-      <p>
-        {{ r }}
+    <div class="col-lg-10" style="margin-bottom:10px">
+      <p style="margin-bottom:0px"><span id="dots{{forloop.counter}}">{{r|truncatechars:100}}</span><span id="more{{forloop.counter}}" style="display:none">{{r}}</span>
+    <a onclick="myFunction({{forloop.counter}})" id="myBtn{{forloop.counter}}">Read more</a>
       </p>
     </div>
   </div>
@@ -103,14 +103,48 @@
   <div class="row">
     <div class="col-lg-2" style="text-align: left">
       <p>&nbsp Bad Review {{ forloop.counter }} :</p>
-      <!-- <p>&nbsp&nbsp&nbsp&nbspRating = 9/10</p> -->
     </div>
-    <div class="col-lg-10">
-      <p>
-        {{ r }}
+    <div class="col-lg-10" style="margin-bottom:10px">
+      <p style="margin-bottom:0px"><span id="dotsr{{forloop.counter}}">{{r|truncatechars:100}}</span><span id="morer{{forloop.counter}}" style="display:none">{{r}}</span>
+      <a onclick="myFunctionr({{forloop.counter}})" id="myBtnr{{forloop.counter}}">Read more</a>
       </p>
     </div>
   </div>
   {% endfor %}  
 
+{% endblock %}
+
+{% block js %}
+<script>
+  function myFunction(x) {
+  var dots = document.getElementById("dots"+x);
+  var moreText = document.getElementById("more"+x);
+  var btnText = document.getElementById("myBtn"+x);
+
+  if (dots.style.display === "none") {
+    dots.style.display = "inline";
+    btnText.innerHTML = "Read more"; 
+    moreText.style.display = "none";
+  } else {
+    dots.style.display = "none";
+    btnText.innerHTML = "Read less"; 
+    moreText.style.display = "inline";
+  }
+}
+  function myFunctionr(x) {
+  var dots = document.getElementById("dotsr"+x);
+  var moreText = document.getElementById("morer"+x);
+  var btnText = document.getElementById("myBtnr"+x);
+
+  if (dots.style.display === "none") {
+    dots.style.display = "inline";
+    btnText.innerHTML = "Read more"; 
+    moreText.style.display = "none";
+  } else {
+    dots.style.display = "none";
+    btnText.innerHTML = "Read less"; 
+    moreText.style.display = "inline";
+  }
+}
+</script>  
 {% endblock %}
