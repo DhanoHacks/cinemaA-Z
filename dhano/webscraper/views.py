@@ -181,10 +181,12 @@ def save_tvshow(response):
     headers = {'Accept-Language': 'en-US, en;q=0.5'}
 
     f=int(open("done_tvseries.txt","r").read())
+    count = 0
+    before = f
     #pages = np.arange(1,1001,50)
 
     # Storing each of the urls of 50 movies 
-    if f<1001:
+    while f<1001 and count<2:
         # Getting the contents from the each url
         page = requests.get('https://www.imdb.com/search/title/?count50&start='+ str(f) + '&num_votes=1000,&sort=num_votes,desc&title_type=tv_series', headers=headers)
         soup = BeautifulSoup(page.text, 'html.parser')
@@ -298,8 +300,10 @@ def save_tvshow(response):
                 ,year_of_release=year,duration=runtime,genre=genre.split(", "),cast=stars
                 ,reviews=review_for_one_movie,platform=platform_for_one_movie,image_url=imageurl)
                 m.save()
-    open("done_tvseries.txt","w").write(str(f+50))
-    return HttpResponse(f"Finished Scraping Movies {f} - {f+49}")
+        f+=50
+        count+=1
+    open("done_tvseries.txt","w").write(str(f))
+    return HttpResponse(f"Finished Scraping Movies {before} - {f-1}")
 
 
 def search_results_view(response):
