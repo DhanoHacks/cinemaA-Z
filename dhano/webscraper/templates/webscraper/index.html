@@ -1,38 +1,164 @@
-{% extends "webscraper/base.html"%}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title class="loginPage">{% block title %}{% endblock%}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'stylesheet_home.css' %}" />
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  </head>
+  <body>
+    <div class="top container-fluid">
+      <div class="rows">
+        <div class="col-lg-6">
+          <h3 style="padding-bottom: 3px"><b>DATr</b></h3>
+        </div>
+        <div class="col-lg-4 search">
+          <form action="{% url 'search_page' %}" method="get">
+            <input name="q" type="text" placeholder="Search.." />
+            <input type="radio" id="movieradio" name="choice" value="searchingMovies">
+            <label for="movieradio">Movie</label>
+            <input type="radio" id="showradio" name="choice" value="searchingShows">
+            <label for="showradio">Show</label>
+            <button type="submit"><i class="fa fa-search"></i></button>
+          </form>
+        </div>
+        <div class="col-lg-2 links">
+          {% if user.is_authenticated%}
+            <h5> <a href="/home/">Home</a> | <a href="/user/">Profile</a> | <a href="/logout/">Logout</a></h5>
+          {% else %}
+            <h5> <a href="/home/">Home</a> | <a href="/login">Log in</a> | <a href="/register/">Sign up</a></h5>
+          {% endif %}
+        </div>
+      </div>
+    </div>
 
-{% block title %}
-  Home Page
-{% endblock %}
+    <div id="top10">TOP 10 MOVIES AND TV SHOWS</div>
+    <div class="container homepage">
 
-{% block content %}
-<p>Top 10 shows</p>
-<p>Carousel daalna hai</p>
-<p>featured shows</p>
-<h4>Watched</h4>
-<ul>
 
-  {%for movies in watched%}
-    <li>{{movies}}</li>
-  {% endfor %}
 
-</ul>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" style="margin: 0px 100px">
+            <ol class="carousel-indicators">
+              {% for movie in top10 %}
+              {% if forloop.counter == 1 %}
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+              {% else %}
+                <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter|add:'-1' }}"></li>
+              {% endif %}
+              {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+                {% for movie in top10 %}
+                {% if forloop.counter == 1 %}
+                <div class="carousel-item active" style="text-align:center">
+                  <a href="/{{ movie.id }}">
+                    <img src="{{ movie.image_url }}"
+                        width="auto" height="650px" style="padding-bottom: 10px" alt="slide 1"></a>
+                </div>
+                {% else %}
+                <div class="carousel-item" style="text-align:center">
+                  <a href="/{{ movie.id }}">
+                    <img src="{{ movie.image_url }}"
+                        width="auto" height="650px" style="padding-bottom: 10px" alt="slide {{ forloop.counter }}"></a>
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </div>
+    {% if not user.is_authenticated %}
+    <div id=signInButton>
+      <!-- TODO: SEND THIS TO LOGIN PAGE -->
+        <button class="button" style="vertical-align:middle"><span>Sign In to view your watchlist</span></button>
+    </div>
+    {% endif %}
 
-<h4>Watchlist</h4>
-<ul>
+    </div>
 
-  {%for movies in watchlist%}
-    <li>{{movies}}</li>
-  {% endfor %}
+    <div class=watchlist>
+        <div class="line-1"></div>
+        <div id=watchlistheading>
+            WATCH LIST
+        </div>
+        <div class="line-1"></div>
+        <div class="row">
+          {% for movie in watched  %}
+            <div class="column">
+              <a href="/{{ movie.id }}">
+                <img src="{{ movie.image_url }}"
+                    width="auto" height="300px" alt="Snow" style="width:100%"></a>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="line-1"></div>
+        <div id=watchlistheading>
+            RECOMMENDED MOVIES AND TV SHOWS
+        </div>
+        <div class="line-1"></div>
+        <div class="row">
+          {% for movie in recommended  %}
+            <div class="column">
+              <a href="/{{ movie.id }}">
+                <img src="{{ movie.image_url }}"
+                    width="auto" height="300px" alt="Snow" style="width:100%"></a>
+            </div>
+            {% endfor %}
+        </div>
 
-</ul>
+        <div class="line-1"></div>
+        <div id=watchlistheading>
+            FAVOURITES
+        </div>
+        <div class="line-1"></div>
+        <div class="row">
+          {% for movie in liked %}
+            <div class="column">
+              <a href="/{{ movie.id }}">
+                <img src="{{ movie.image_url }}"
+                    width="auto" height="300px" alt="Snow" style="width:100%"></a>
+            </div>
+          {% endfor %}
+        </div>
+        <div class="line-1"></div>
+        <div id=watchlistheading>
+            WATCHED MOVIES AND TV SHOWS
+        </div>
+        <div class="line-1"></div>
+        <div class="row">
+          {% for movie in watched %}
+          <div class="column">
+            <a href="/{{ movie.id }}">
+              <img src="{{ movie.image_url }}"
+                  width="auto" height="300px" alt="Snow" style="width:100%"></a>
+          </div>
+          {% endfor %}
+        </div>
+        <div class="line-1"></div>
+    </div>
 
-<h4>Liked</h4>
-<ul>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
 
-  {%for movies in liked%}
-    <li>{{movies}}</li>
-  {% endfor %}
-  
+</html>
 
-</ul>
-{% endblock %}

@@ -599,20 +599,43 @@ def home(response):
         liked = List(type="liked")
         liked.save()
 
-    list = List.objects.filter(type="watched")
-    watched = []
-    for movie in list[0].items_set.all():
-        if(movie.user == response.user):
-            watched.append(movie)
-    list = List.objects.filter(type="watchlist")
-    watchlist = []
-    for movie in list[0].items_set.all():
-        if(movie.user == response.user):
-            watchlist.append(movie)
-    list = List.objects.filter(type="liked")
-    liked = []
-    for movie in list[0].items_set.all():
-        if(movie.user == response.user):
-            liked.append(movie)
+    list = List.objects.get(type="watched").items_set.filter(user=response.user.id).order_by('-id')
+    watched = [MovieData.objects.get(name=movie.text) for movie in list]
+    list = List.objects.get(type="watchlist").items_set.filter(user=response.user.id).order_by('-id')
+    watchlist = [MovieData.objects.get(name=movie.text) for movie in list]
+    list = List.objects.get(type="liked").items_set.filter(user=response.user.id).order_by('-id')
+    liked = [MovieData.objects.get(name=movie.text) for movie in list]
+    top10 = MovieData.objects.all().order_by('-rating__imdb')[0:10]
+
+
+    sim_movie_names = []
+    recommended = []
+    for movie in liked:
+        for sim_movie in movie.similar:
+            if sim_movie not in sim_movie_names:
+                sim_movie_names.append(sim_movie)
+    for movie_name in sim_movie_names:
+        f=MovieData.objects.filter(name=movie_name)
+        if len(f)>0 and f[0] not in watched:
+            recommended.append(f[0])
+
+    # list = List.objects.get(type="watched")
+    # watched = []
     
-    return render(response, "webscraper/index.html", {"watched":watched, "watchlist":watchlist, "liked":liked})
+    # for movie in list[0].items_set.all():
+    #     if(movie.user == response.user):
+    #         watched.append(MovieData.objects.get(name=movie))
+    # list = List.objects.filter(type="watchlist")
+    # watchlist = []
+    # for movie in list[0].items_set.all():
+    #     if(movie.user == response.user):
+    #         watchlist.append(MovieData.objects.get(name=movie))
+    # list = List.objects.filter(type="liked")
+    # liked = []
+    # for movie in list[0].items_set.all():
+    #     if(movie.user == response.user):
+    #         liked.append(MovieData.objects.get(name=movie))
+    
+    
+    return render(response, "webscraper/index.html"
+    , {"top10":top10, "recommended":recommended[0:8], "watched":watched[0:8], "watchlist":watchlist[0:8], "liked":liked[0:8]})
