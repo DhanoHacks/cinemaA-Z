@@ -15,7 +15,14 @@ def temp(response):
 
 def index(response,id):
     m = MovieData.objects.get(id=id)
-    return render(response, "webscraper/movie.html", {"m":m})
+    sim = []
+    for s in m.similar:
+        if len(MovieData.objects.filter(name=s))>0:
+            sim.append({"mname":s,"mid":MovieData.objects.filter(name=s)[0].id})
+        else:
+            sim.append({"mname":s,"mid":"notfound"})
+    print(sim)
+    return render(response, "webscraper/movie.html", {"m":m,"sim":sim})
 
 def save(response):
 
@@ -171,7 +178,7 @@ def search_results_view(response):
     query = response.GET.get("q")
     movie = MovieData.objects.filter(name__contains=query)
     if len(movie)>0:
-        return render(response, "webscraper/movie.html", {"m":movie[0]})
+        return index(response,movie[0].id)
     else:
         # Getting English translated titles from the movies
         headers = {'Accept-Language': 'en-US, en;q=0.5'}
@@ -187,7 +194,7 @@ def search_results_view(response):
             sleep(randint(2,10))
             
             if len(movie_div) != 0:
-                container = movie_div[0:1]
+                container = movie_div[0]
                 #print(container)
                 # Scraping the movie's name
                 name = container.h3.a.text
@@ -311,7 +318,7 @@ def search_results_view(response):
                     ,year_of_release=year,duration=runtime,genre=genre.split(", "),cast=stars
                     ,reviews=review_for_one_movie,platform=platform_for_one_movie,image_url=imageurl)
                     m.save()
-                    return render(response, "webscraper/movie.html", {"m":m})
+                    return index(response,m.id)
             else:
                 return render(response, "webscraper/error.html")
 

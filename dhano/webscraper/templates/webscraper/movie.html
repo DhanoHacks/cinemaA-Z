@@ -57,8 +57,13 @@
       <h3 class="movies/tvshows">Similar movies and TV shows:</h3>
       
       <ul class="listofmovtv">
-        {% for s in m.similar %}
-        <li>{{ s }}</li>
+        {% for s in sim %}
+        
+        {% if s.mid == "notfound" %}
+        <li>{{ s.mname }}</li>
+        {% else %}
+        <a  href="/{{ s.mid }}"><li>{{ s.mname }}</li></a>
+        {% endif %}
         {% endfor %}
       </ul>
 
