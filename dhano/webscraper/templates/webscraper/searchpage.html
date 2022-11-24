@@ -17,72 +17,21 @@
           </tr>
         </thead> -->
     <tbody>
+        {% for movie in list_of_movies %}
         <tr>
-            <th scope="row">1</th>
-            <td><img class="img"
-                    src="https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg"
-                    width="100px" height="150px" style="padding-bottom: 10px" alt="Image Not Available" />
+            <th scope="row">{{ forloop.counter }}</th>
+            <td><a href="/{{movie.id}}"><img class="img"
+                    src="{{ movie.image_url }}"
+                    width="100px" height="150px" style="padding-bottom: 10px" alt="Image Not Available" /></a>
             </td>
             <td>
-                <p class="tabletext">How to Train Your Dragon</p>
+                <a href="/{{movie.id}}"><p class="tabletext">{{ movie.name }}</p></a>
             </td>
             <td>
-                <p class="tabletext">2010</p>
+                <a href="/{{movie.id}}"><p class="tabletext">{{ movie.year_of_release }}</p></a>
             </td>
         </tr>
-        <tr>
-            <th scope="row">2</th>
-            <td><img class="img"
-                    src="https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg"
-                    width="100px" height="150px" style="padding-bottom: 10px" alt="Image Not Available" />
-            </td>
-            <td>
-                <p class="tabletext">How to Train Your Dragon 2</p>
-            </td>
-            <td>
-                <p class="tabletext">2014</p>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">3</th>
-            <td><img class="img"
-                    src="https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg"
-                    width="100px" height="150px" style="padding-bottom: 10px" alt="Image Not Available" />
-            </td>
-            <td>
-                <p class="tabletext">How to Train Your Dragon: The Hidden World</p>
-            </td>
-            <td>
-                <p class="tabletext">2019</p>
-            </td>
-        </tr>
-
-        <tr>
-            <th scope="row">4</th>
-            <td><img class="img"
-                    src="https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg"
-                    width="100px" height="150px" style="padding-bottom: 10px" alt="Image Not Available" />
-            </td>
-            <td>
-                <p class="tabletext">How to Train Your Dragon: Homecoming </p>
-            </td>
-            <td>
-                <p class="tabletext">2019</p>
-            </td>
-        </tr>
-        <tr>
-            <th scope="row">5</th>
-            <td><img class="img"
-                    src="https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg"
-                    width="100px" height="150px" style="padding-bottom: 10px" alt="Image Not Available" />
-            </td>
-            <td>
-                <p class="tabletext">How to Train Our Dragon</p>
-            </td>
-            <td>
-                <p class="tabletext">2018</p>
-            </td>
-        </tr>
+        {% endfor %}
     </tbody>
 </table>
 

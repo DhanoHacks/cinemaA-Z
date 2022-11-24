@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block searchbar %}
-          <form action="{% url 'search_results' %}" method="get">
+          <form action="{% url 'search_page' %}" method="get">
             <input name="q" type="text" placeholder="Search.." />
             <input type="radio" id="movieradio" name="choice" value="searchingMovies">
             <label for="movieradio">Movie</label>
