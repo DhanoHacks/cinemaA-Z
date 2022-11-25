@@ -656,4 +656,4 @@ def home(response):
             recommended.append(f[0])
 
     return render(response, "webscraper/index.html" #Renders home page
-    , {"top10":top10, "recommended":recommended[0:8], "watched":watched[0:8], "watchlist":watchlist[0:8], "liked":liked[0:8], "lengthwl":len(watchlist), "lengthwtd":len(watched), "lenlik":len(liked), "lenrec":len(recommended)})
+    , {"top10":top10, "recommended":recommended, "watched":watched, "watchlist":watchlist, "liked":liked, "lengthwl":len(watchlist), "lengthwtd":len(watched), "lenlik":len(liked), "lenrec":len(recommended)})

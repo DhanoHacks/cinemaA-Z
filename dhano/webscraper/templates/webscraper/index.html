@@ -99,7 +99,7 @@
             <div class="column">
               <a href="/{{ movie.id }}">
                 <img src="{{ movie.image_url }}"
-                    width="auto" height="300px" alt="Snow" style="width:100%"></a>
+                    width="auto" height="300px" alt="Snow" ></a>
             </div>
           {% endfor %}
           {% if lengthwl is 0 %}
@@ -107,7 +107,7 @@
           {% endif%}
         </div>
         <div class="line-1"></div>
-        <div id=watchlistheading>
+        <div id=recommendedheading>
             RECOMMENDED MOVIES AND TV SHOWS
         </div>
         <div class="line-1"></div>
@@ -116,7 +116,7 @@
             <div class="column">
               <a href="/{{ movie.id }}">
                 <img src="{{ movie.image_url }}"
-                    width="auto" height="300px" alt="Snow" style="width:100%"></a>
+                    width="auto" height="300px" alt="Snow"></a>
             </div>
           {% endfor %}
           {% if lenrec is 0 %}
@@ -125,7 +125,7 @@
         </div>
 
         <div class="line-1"></div>
-        <div id=watchlistheading>
+        <div id=likedheading>
             FAVOURITES
         </div>
         <div class="line-1"></div>
@@ -134,7 +134,7 @@
             <div class="column">
               <a href="/{{ movie.id }}">
                 <img src="{{ movie.image_url }}"
-                    width="auto" height="300px" alt="Snow" style="width:100%"></a>
+                    width="auto" height="300px" alt="Snow"></a>
             </div>
           {% endfor %}
           {% if lenlik is 0 %}
@@ -142,7 +142,7 @@
         {% endif%}
         </div>
         <div class="line-1"></div>
-        <div id=watchlistheading>
+        <div id=watchedheading>
             WATCHED MOVIES AND TV SHOWS
         </div>
         <div class="line-1"></div>
