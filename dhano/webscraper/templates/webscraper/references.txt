@@ -1,1 +1,0 @@
-https://stackoverflow.com/questions/42002313/css-image-with-fixed-width-and-auto-adjust-height

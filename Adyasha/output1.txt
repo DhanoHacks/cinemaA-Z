@@ -1,6 +1,0 @@
-cast : ['Shameik Moore', 'Jake Johnson', 'Hailee Steinfeld', 'Bob Persichetti', 'Peter Ramsey', 'Rodney Rothman', 'Phil Lord', 'Rodney Rothman']
-Movie : Spider-Man: Into the Spider-Verse
-image : https://m.media-amazon.com/images/M/MV5BMjMwNDkxMTgzOF5BMl5BanBnXkFtZTgwNTkwNTQ3NjM@._V1_.jpg
-year of release : 2018
-rating : 8.4
-genre : ['Animation', 'Action', 'Adventure']

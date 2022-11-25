@@ -21,3 +21,6 @@ Requirements:
 - django
 - crispy forms, install using `pip install crispy-bootstrap5`
 - sphinx 4.* for documentation generation
+
+Schema (of all databases involved):
+![Schema of Database](schema_visualized.png "Schema, visualized")
