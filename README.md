@@ -5,10 +5,19 @@ Created with :heart: by team *Kyumt Cat*, consisting of Adyasha Patra, Dhananjay
 
 Usage:
 - Clone repository to local system, navigate to `dhano` folder, and run `python3 manage.py runserver`
-- Go to the local ip/port indicated by manage.py, and choose either `register` or `login` (if new user)
-- After loggin in, go to any movie of your choice using the ip format (`localhost_ip/any_number_from_1_to_50`)
-- Functioning Search Bar on every movie page, capable of searching within, and out of the database
+- Click on `root` url to be redirected to home page of website
+
+URLs Directory:
+- `/home/`: Home page, displays current top 10 movies, and users watchlist, watched, and liked movies, and recommends new movies based on movies similar to liked movies
+- `/register/`: Registration/login page
+- `/user/`: Profile page for logged in user
+- `/admin/`: Admin page for superusers
+- `/<id>`: Movie page with the corresponding id, in the database
+- `/search/?q=<query>`: Search page displayind results for given query
+- `/save-movies`: Scrapes for new movies and stores them in database
+- `/save-tvshows`: Scrapes for new tv shows and stores them in database
 
 Requirements:
 - django
-- crispy forms, using `pip install crispy-bootstrap5`
+- crispy forms, install using `pip install crispy-bootstrap5`
+- sphinx 4.* for documentation generation

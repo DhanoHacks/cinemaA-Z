@@ -1,3 +1,5 @@
+"""Stores registration form which is used for user registration
+"""
 from django import forms
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm

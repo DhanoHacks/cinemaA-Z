@@ -1,9 +1,11 @@
-from django.shortcuts import render
+"""Stores all views/functions involved in the webscraper app
+"""
+
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
 from .models import MovieData, List
 
-import numpy as np
 import requests
 from bs4 import BeautifulSoup
 from time import sleep
@@ -11,17 +13,26 @@ from random import randint
 import re
 
 def temp(response):
-    return HttpResponse("<h1><a href='/register'> Register </a> <br> <a href='/login'> Login </a></h1>")
+    """Redirects to home page
+    """
+    return redirect('/home/')
 
 def index(response,id):
+    """Renders the movie page corresponding to the id
+
+    :param id: id of the movie
+    :type id: int
+    """
     m = MovieData.objects.get(id=id)
+    #generating similar movies
     sim = []
     for s in m.similar:
         if len(MovieData.objects.filter(name=s))>0:
             sim.append({"mname":s,"mid":MovieData.objects.filter(name=s)[0].id})
         else:
             sim.append({"mname":s,"mid":"notfound"})
-    print(sim)
+
+    #updating watched, watchlist, and liked status depending on whether user click on the buttons
     if response.method == "POST" :
         if response.POST.get("watched"):
             watched = List.objects.get(type="watched")
@@ -30,7 +41,6 @@ def index(response,id):
                 watched.items_set.create(text = m.name, user=response.user)
             elif len(items) == 1:
                 items[0].delete()
-
         elif response.POST.get("like"):
             liked = List.objects.get(type="liked")
             items = liked.items_set.all().filter(text=m.name, user=response.user)
@@ -47,16 +57,18 @@ def index(response,id):
                 items[0].delete()
     return render(response, "webscraper/movie.html", {"m":m,"sim":sim})
 
-def save(response):
-    # return save_tvshow(response)
+def save_movies(response):
+    """Scrapes movies from top 1000 list, in multiples of 50"""
+
     # Getting English translated titles from the movies
     headers = {'Accept-Language': 'en-US, en;q=0.5'}
 
+    # File storing the number of movies which have already been scraped
     f=int(open("done_movie.txt","r").read())
-    #pages = np.arange(1,1001,50)
+    before=f
+    # Variable which models how many multiples of 50 we want to scrape
     count=0
 
-    # Storing each of the urls of 50 movies 
     while f<1001 and count<1:
         # Getting the contents from the each url
         page = requests.get('https://www.imdb.com/search/title/?groups=top_1000&start=' + str(f) + '&ref_=adv_nxt',headers=headers)
@@ -71,7 +83,6 @@ def save(response):
         sleep(randint(2,10))
         
         for container in movie_div:
-            #print(container)
             # Scraping the movie's name
             name = container.h3.a.text
             
@@ -84,7 +95,7 @@ def save(response):
             # Scraping the movie's genre
             genre = container.find('span', class_='genre').text.strip()
 
-            # Scraping the rating
+            # Scraping the IMDb rating
             imdb = float(container.strong.text)
 
             # Scraping the plot
@@ -107,13 +118,12 @@ def save(response):
             insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=10")
             soup1 = BeautifulSoup(insidepage.text, 'html.parser')
 
-            # print(soup1.text)
-
+            #Scraping the good reviews
             review_for_one_movie = {"good_reviews":[],"bad_reviews":[]}
             review_div = soup1.find_all('div' , class_="text show-more__control")
             for review in review_div[0:5]:
                 review_for_one_movie["good_reviews"].append(review.text)
-
+            #Scraping the bad reviews
             insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=3")
             soup1 = BeautifulSoup(insidepage.text, 'html.parser')
             review_div = soup1.find_all('div' , class_="text show-more__control")
@@ -128,47 +138,48 @@ def save(response):
             rotten_tomato_page = requests.Session().get(rotten_tomato_url)
             soup1 = BeautifulSoup(rotten_tomato_page.text, 'html.parser')
 
-            # print(soup1.prettify())
-
+            #Scraping the movie platforms
             platform_for_one_movie = []
             where_to_watch = soup1.find_all('where-to-watch-meta')
             for place in where_to_watch:
                 platform = re.findall("\".*?\"", str(place))[0].replace('"',"")
                 platform_for_one_movie.append(platform)
 
-
+            #Scraping similar movies and tv shows
             similar_for_movie = []
             s1 = soup1.find_all("tiles-carousel-responsive-item")
             for elem in s1:
                 similar_for_movie.append(elem.find_all("span")[0].text)
-
+            #If the following quantity is < 3, that means that the movie link was incorrect, we retry with a different link
             if len(soup1.find_all('div',class_="meta-value"))<3:
                 sleep(randint(3,10))
                 rotten_tomato_url = "https://www.rottentomatoes.com/m/" + str(re.sub("[^a-z^0-9^_]","",name.lower().replace("-"," ").replace(" ","_")))
                 rotten_tomato_page = requests.Session().get(rotten_tomato_url)
                 soup1 = BeautifulSoup(rotten_tomato_page.text, 'html.parser')
 
-                # print(soup1.prettify())
-
+                #Scraping the movie platforms
                 platform_for_one_movie = []
                 where_to_watch = soup1.find_all('where-to-watch-meta')
                 for place in where_to_watch:
                     platform = re.findall("\".*?\"", str(place))[0].replace('"',"")
                     platform_for_one_movie.append(platform)
 
-
+                #Scraping similar movies
                 similar_for_movie = []
                 s1 = soup1.find_all("tiles-carousel-responsive-item")
                 for elem in s1:
                     similar_for_movie.append(elem.find_all("span")[0].text)
             
+            #If movie is unavailable on rotten tomatoes, we skip the movie
             if len(soup1.find_all('div',class_="meta-value"))<3:
                 continue
             
+            #Scraping the languages for movie
             language = soup1.find_all('div',class_="meta-value")[2]
 
+            #Scraping the rotten tomatoes rating for movie
             if len(re.findall("\"ratingValue\":\".*?\"",str(soup1)))==0:
-                rotten_tomato_rating = "-"
+                rotten_tomato_rating = "-" #No rating on rotten tomatoes
             else:
                 rotten_tomato_rating = int(re.findall("\"ratingValue\":\".*?\"",str(soup1))[0].replace('"ratingValue":',"").replace('"',''))
 
@@ -180,13 +191,14 @@ def save(response):
             metacritic_page  = requests.get(metacritic_url,headers = user_agent)
             soup2 = BeautifulSoup(metacritic_page.text, 'html.parser')
 
-            # print(soup2.prettify())
+            #Scraping the Metascore for movie
             if len(soup2.find_all('span', class_="metascore_w header_size movie positive"))==0:
-                metascore = "-"
+                metascore = "-" #No rating on rotten tomatoes
             else:
                 metascore = soup2.find_all('span', class_="metascore_w header_size movie positive")[0]
                 metascore=metascore.text
 
+            #Storing the movie if it isnt already stored in the database
             if len(MovieData.objects.filter(name=name))==0:
                 m = MovieData(name=name,site_link={"imdb":movieurl,"rotten_tomatoes":rotten_tomato_url,"metacritic":metacritic_url}
                 ,rating={"imdb":imdb,"rotten_tomatoes":rotten_tomato_rating,"metacritic":metascore},plot=plot
@@ -197,21 +209,21 @@ def save(response):
                 m.save()
         f+=50
         count+=1
-        open("done_movie.txt","w").write(str(f))
-    return HttpResponse(f"Finished Scraping Movies {f-50*count} - {f-1}")
+        open("done_movie.txt","w").write(str(f)) #Updating the file
+    return HttpResponse(f"Finished Scraping {before} - {f-1}") #Just for confirmation
 
 
-def save_tvshow(response):
-    
-    # Getting English translated titles from the movies
+def save_tvshows(response):
+    """Scrapes tv shows from top 1000 list, in multiples of 50"""
+    # Getting English translated titles from the tv shows
     headers = {'Accept-Language': 'en-US, en;q=0.5'}
 
+    # File storing the number of tv shows which have already been scraped
     f=int(open("done_tvseries.txt","r").read())
-    count = 0
     before = f
-    #pages = np.arange(1,1001,50)
+    # Variable which models how many multiples of 50 we want to scrape
+    count = 0
 
-    # Storing each of the urls of 50 movies 
     while f<1001 and count<1:
         # Getting the contents from the each url
         page = requests.get('https://www.imdb.com/search/title/?count50&start='+ str(f) + '&num_votes=1000,&sort=num_votes,desc&title_type=tv_series', headers=headers)
@@ -226,20 +238,19 @@ def save_tvshow(response):
         sleep(randint(2,10))
         
         for container in movie_div:
-            #print(container)
-            # Scraping the movie's name
+            # Scraping the tv show's name
             name = container.h3.a.text
             
-            # Scraping the movie's year
+            # Scraping the tv show's year
             year = int(re.search("[0-9]+",container.h3.find('span', class_='lister-item-year').text).group(0))
             
-            # Scraping the movie's length
+            # Scraping the tv show's length
             runtime = int(re.search("[0-9]+",container.find('span', class_='runtime').text).group(0)) if container.p.find('span', class_='runtime') else 0
 
-            # Scraping the movie's genre
+            # Scraping the tv show's genre
             genre = container.find('span', class_='genre').text.strip()
 
-            # Scraping the rating
+            # Scraping the IMDb rating
             imdb = float(container.strong.text)
 
             # Scraping the plot
@@ -262,13 +273,12 @@ def save_tvshow(response):
             insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=10")
             soup1 = BeautifulSoup(insidepage.text, 'html.parser')
 
-            # print(soup1.text)
-
+            #Scraping the good reviews
             review_for_one_movie = {"good_reviews":[],"bad_reviews":[]}
             review_div = soup1.find_all('div' , class_="text show-more__control")
             for review in review_div[0:5]:
                 review_for_one_movie["good_reviews"].append(review.text)
-
+            #Scraping the bad reviews
             insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=3")
             soup1 = BeautifulSoup(insidepage.text, 'html.parser')
             review_div = soup1.find_all('div' , class_="text show-more__control")
@@ -283,24 +293,25 @@ def save_tvshow(response):
             rotten_tomato_page = requests.Session().get(rotten_tomato_url)
             soup1 = BeautifulSoup(rotten_tomato_page.text, 'html.parser')
 
-            # print(soup1.prettify())
-
+            #Scraping the platforms on which we can watch
             platform_for_one_movie = []
             where_to_watch = soup1.find_all('where-to-watch-meta')
             for place in where_to_watch:
                 platform = re.findall("\".*?\"", str(place))[0].replace('"',"")
                 platform_for_one_movie.append(platform)
 
-
+            #Scraping similar movies and tv shows
             similar_for_movie = []
             s1 = soup1.find_all("tiles-carousel-responsive-item")
             for elem in s1:
                 similar_for_movie.append(elem.find_all("span")[0].text)
 
+            #Scraping language
             language = ["English",]
 
+            #Scraping rotten tomatoes rating
             if len(re.findall("\"ratingValue\":\".*?\"",str(soup1)))==0:
-                rotten_tomato_rating = "-"
+                rotten_tomato_rating = "-" #Not rated on rotten tomatoes
             else:
                 rotten_tomato_rating = int(re.findall("\"ratingValue\":\".*?\"",str(soup1))[0].replace('"ratingValue":',"").replace('"',''))
 
@@ -312,13 +323,14 @@ def save_tvshow(response):
             metacritic_page  = requests.get(metacritic_url,headers = user_agent)
             soup2 = BeautifulSoup(metacritic_page.text, 'html.parser')
 
-            # print(soup2.prettify())
+            #Scraping metascore
             if len(soup2.find_all('span', class_="metascore_w header_size tvshow positive"))==0:
-                metascore = "-"
+                metascore = "-" #Tv show not rated on metacritic
             else:
                 metascore = soup2.find_all('span', class_="metascore_w header_size tvshow positive")[0]
                 metascore=metascore.text
 
+            #Storing the tv show if it doesnt already exist in the database
             if len(MovieData.objects.filter(name=name))==0:
                 m = MovieData(name=name,site_link={"imdb":movieurl,"rotten_tomatoes":rotten_tomato_url,"metacritic":metacritic_url}
                 ,rating={"imdb":imdb,"rotten_tomatoes":rotten_tomato_rating,"metacritic":metascore},plot=plot
@@ -328,14 +340,17 @@ def save_tvshow(response):
                 m.save()
         f+=50
         count+=1
-    open("done_tvseries.txt","w").write(str(f))
-    return HttpResponse(f"Finished Scraping Movies {before} - {f-1}")
+        open("done_tvseries.txt","w").write(str(f)) #Updating the file
+    return HttpResponse(f"Finished Scraping {before} - {f-1}") #Just for confirmation
 
 
 def search_page_view(response):
+    """Searches user query within the database, if it doesnt exist, scrapes atmost
+    2 movies and 2 tv shows online, and displays search results
+    """
     query = response.GET.get("q")
     movies = MovieData.objects.filter(name__contains=query)
-    if len(movies)>0:
+    if len(movies)>0: #Found the query within the database
         return render(response,"webscraper/searchpage.html",{"list_of_movies":movies})
     else:
         # Getting English translated titles from the movies
@@ -343,6 +358,7 @@ def search_page_view(response):
         with requests.Session() as s:
             movie_name = query.replace(" ","%20")
             sleep(randint(3,10))
+            #Scraping results from IMDb search page for movies
             movieurl = 'https://www.imdb.com/search/title/?title='+ movie_name+'&sort=num_votes,desc'
             page = requests.get(movieurl)
             
@@ -352,10 +368,9 @@ def search_page_view(response):
             sleep(randint(2,10))
             a=0
             movies=[]
-            while a<len(movie_div) and a<2:
+            while a<len(movie_div) and a<2: #Scrapes atmost 2 movies
                 a+=1
                 container = movie_div[a]
-                #print(container)
                 # Scraping the movie's name
                 name = container.h3.a.text
             
@@ -391,13 +406,12 @@ def search_page_view(response):
                 insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=10")
                 soup1 = BeautifulSoup(insidepage.text, 'html.parser')
 
-                # print(soup1.text)
-
+                #Scraping good reviews
                 review_for_one_movie = {"good_reviews":[],"bad_reviews":[]}
                 review_div = soup1.find_all('div' , class_="text show-more__control")
                 for review in review_div[0:5]:
                     review_for_one_movie["good_reviews"].append(review.text)
-
+                #Scraping bad reviews
                 insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=3")
                 soup1 = BeautifulSoup(insidepage.text, 'html.parser')
                 review_div = soup1.find_all('div' , class_="text show-more__control")
@@ -412,47 +426,48 @@ def search_page_view(response):
                 rotten_tomato_page = requests.Session().get(rotten_tomato_url)
                 soup1 = BeautifulSoup(rotten_tomato_page.text, 'html.parser')
 
-                # print(soup1.prettify())
-
+                #Scraping platforms on which we can view the movie
                 platform_for_one_movie = []
                 where_to_watch = soup1.find_all('where-to-watch-meta')
                 for place in where_to_watch:
                     platform = re.findall("\".*?\"", str(place))[0].replace('"',"")
                     platform_for_one_movie.append(platform)
 
-
+                #Scraping similar movies and tv shows
                 similar_for_movie = []
                 s1 = soup1.find_all("tiles-carousel-responsive-item")
                 for elem in s1:
                     similar_for_movie.append(elem.find_all("span")[0].text)
 
-                if len(soup1.find_all('div',class_="meta-value"))<3:
+                if len(soup1.find_all('div',class_="meta-value"))<3: #if this happens, original rotten tomatoes movie link was incorrect
                     sleep(randint(3,10))
+                    #new movie url
                     rotten_tomato_url = "https://www.rottentomatoes.com/m/" + str(re.sub("[^a-z^0-9^_]","",name.lower().replace("-"," ").replace(" ","_")))
                     rotten_tomato_page = requests.Session().get(rotten_tomato_url)
                     soup1 = BeautifulSoup(rotten_tomato_page.text, 'html.parser')
 
-                    # print(soup1.prettify())
-
+                    #Scraping platforms on which we can view the movie
                     platform_for_one_movie = []
                     where_to_watch = soup1.find_all('where-to-watch-meta')
                     for place in where_to_watch:
                         platform = re.findall("\".*?\"", str(place))[0].replace('"',"")
                         platform_for_one_movie.append(platform)
 
-
+                    #Scraping similar movies and tv shows
                     similar_for_movie = []
                     s1 = soup1.find_all("tiles-carousel-responsive-item")
                     for elem in s1:
                         similar_for_movie.append(elem.find_all("span")[0].text)
                 
-                if len(soup1.find_all('div',class_="meta-value"))<3:
+                if len(soup1.find_all('div',class_="meta-value"))<3: #if it happens again, movie doesnt exist on rotten tomatoes
                     continue
                 
+                #Scraping the languages movie is available in
                 language = soup1.find_all('div',class_="meta-value")[2]
 
+                #Scraping the rotten tomatoes rating
                 if len(re.findall("\"ratingValue\":\".*?\"",str(soup1)))==0:
-                    rotten_tomato_rating = "-"
+                    rotten_tomato_rating = "-" #Movie not rated on rotten tomatoes
                 else:
                     rotten_tomato_rating = int(re.findall("\"ratingValue\":\".*?\"",str(soup1))[0].replace('"ratingValue":',"").replace('"',''))
 
@@ -464,13 +479,14 @@ def search_page_view(response):
                 metacritic_page  = requests.get(metacritic_url,headers = user_agent)
                 soup2 = BeautifulSoup(metacritic_page.text, 'html.parser')
 
-                # print(soup2.prettify())
+                #Scraping the metascore
                 if len(soup2.find_all('span', class_="metascore_w header_size movie positive"))==0:
-                    metascore = "-"
+                    metascore = "-" #Movie not rated on metacritic
                 else:
                     metascore = soup2.find_all('span', class_="metascore_w header_size movie positive")[0]
                     metascore=metascore.text
 
+                #Storing the movie in the database
                 if len(MovieData.objects.filter(name=name))==0:
                     m = MovieData(name=name,site_link={"imdb":movieurl,"rotten_tomatoes":rotten_tomato_url,"metacritic":metacritic_url}
                     ,rating={"imdb":imdb,"rotten_tomatoes":rotten_tomato_rating,"metacritic":metascore},plot=plot
@@ -481,23 +497,22 @@ def search_page_view(response):
                     movies.append(m)
 
             b=0
-            while b<len(movie_div) and b<2:
+            while b<len(movie_div) and b<2: #Scrapes atmost 2 movies
                 b+=1
                 container=movie_div[b]
-                #print(container)
-                # Scraping the movie's name
+                # Scraping the tv show's name
                 name = container.h3.a.text
                 
-                # Scraping the movie's year
+                # Scraping the tv show's year
                 year = int(re.search("[0-9]+",container.h3.find('span', class_='lister-item-year').text).group(0))
                 
-                # Scraping the movie's length
+                # Scraping the tv show's length
                 runtime = int(re.search("[0-9]+",container.find('span', class_='runtime').text).group(0)) if container.p.find('span', class_='runtime') else 0
 
-                # Scraping the movie's genre
+                # Scraping the tv show's genre
                 genre = container.find('span', class_='genre').text.strip()
 
-                # Scraping the rating
+                # Scraping the IMDb rating
                 imdb = float(container.strong.text)
 
                 # Scraping the plot
@@ -520,13 +535,12 @@ def search_page_view(response):
                 insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=10")
                 soup1 = BeautifulSoup(insidepage.text, 'html.parser')
 
-                # print(soup1.text)
-
+                #Scraping the good reviews
                 review_for_one_movie = {"good_reviews":[],"bad_reviews":[]}
                 review_div = soup1.find_all('div' , class_="text show-more__control")
                 for review in review_div[0:5]:
                     review_for_one_movie["good_reviews"].append(review.text)
-
+                #Scraping the bad reviews
                 insidepage = requests.Session().get(movieurl + "reviews?sort=0&ratingFilter=3")
                 soup1 = BeautifulSoup(insidepage.text, 'html.parser')
                 review_div = soup1.find_all('div' , class_="text show-more__control")
@@ -541,24 +555,25 @@ def search_page_view(response):
                 rotten_tomato_page = requests.Session().get(rotten_tomato_url)
                 soup1 = BeautifulSoup(rotten_tomato_page.text, 'html.parser')
 
-                # print(soup1.prettify())
-
+                #Scraping platforms on which we can view the movie
                 platform_for_one_movie = []
                 where_to_watch = soup1.find_all('where-to-watch-meta')
                 for place in where_to_watch:
                     platform = re.findall("\".*?\"", str(place))[0].replace('"',"")
                     platform_for_one_movie.append(platform)
 
-
+                #Scraping similar movies and tv shows
                 similar_for_movie = []
                 s1 = soup1.find_all("tiles-carousel-responsive-item")
                 for elem in s1:
                     similar_for_movie.append(elem.find_all("span")[0].text)
 
+                #Scraping the tv show language
                 language = ["English",]
 
+                #Scraping the rotten tomatoes rating
                 if len(re.findall("\"ratingValue\":\".*?\"",str(soup1)))==0:
-                    rotten_tomato_rating = "-"
+                    rotten_tomato_rating = "-" #Tv show not yet rated on rotten tomatoes
                 else:
                     rotten_tomato_rating = int(re.findall("\"ratingValue\":\".*?\"",str(soup1))[0].replace('"ratingValue":',"").replace('"',''))
 
@@ -570,13 +585,14 @@ def search_page_view(response):
                 metacritic_page  = requests.get(metacritic_url,headers = user_agent)
                 soup2 = BeautifulSoup(metacritic_page.text, 'html.parser')
 
-                # print(soup2.prettify())
+                #Scraping the metascore
                 if len(soup2.find_all('span', class_="metascore_w header_size tvshow positive"))==0:
-                    metascore = "-"
+                    metascore = "-" #TV show not yet rated on metacritic
                 else:
                     metascore = soup2.find_all('span', class_="metascore_w header_size tvshow positive")[0]
                     metascore=metascore.text
 
+                #Stores the tv show in the database
                 if len(MovieData.objects.filter(name=name))==0:
                     m = MovieData(name=name,site_link={"imdb":movieurl,"rotten_tomatoes":rotten_tomato_url,"metacritic":metacritic_url}
                     ,rating={"imdb":imdb,"rotten_tomatoes":rotten_tomato_rating,"metacritic":metascore},plot=plot
@@ -585,13 +601,20 @@ def search_page_view(response):
                     ,reviews=review_for_one_movie,platform=platform_for_one_movie,image_url=imageurl)
                     m.save()
                     movies.append(m)
-            if len(movies)>0:
+            if len(movies)>0: #Render search page displaying all search results
                 return render(response,"webscraper/searchpage.html",{"list_of_movies":movies})
-            else:
+            else: #No search results returned
                 return render(response, "webscraper/error.html")
 
 
 def home(response):
+    """Home page of the project, displays current top 10 movies,
+    and the watched, liked, and watchlist movies and tv shows for the user.
+    Also displays recommended movies based on the movies similar to the
+    user's liked movies which havent been watched by user yet
+    """
+
+    #Initialized empty lists for each type, if not existing
     if not List.objects.filter(type="watched").exists():
         watched = List(type = "watched")
         watched.save()
@@ -602,6 +625,7 @@ def home(response):
         liked = List(type="liked")
         liked.save()
 
+    #Generate liked, watched, and watchlist lists of movies
     list = List.objects.get(type="watched").items_set.filter(user=response.user.id).order_by('-id')
     watched = [MovieData.objects.get(name=movie.text) for movie in list]
     list = List.objects.get(type="watchlist").items_set.filter(user=response.user.id).order_by('-id')
@@ -610,7 +634,7 @@ def home(response):
     liked = [MovieData.objects.get(name=movie.text) for movie in list]
     top10 = MovieData.objects.all().order_by('-rating__imdb')[0:10]
 
-
+    #Generate recommened movies based on movies similar to user's liked movies
     sim_movie_names = []
     recommended = []
     for movie in liked:
@@ -622,5 +646,5 @@ def home(response):
         if len(f)>0 and f[0] not in watched:
             recommended.append(f[0])
 
-    return render(response, "webscraper/index.html"
+    return render(response, "webscraper/index.html" #Renders home page
     , {"top10":top10, "recommended":recommended[0:8], "watched":watched[0:8], "watchlist":watchlist[0:8], "liked":liked[0:8], "lengthwl":len(watchlist), "lengthwtd":len(watched), "lenlik":len(liked), "lenrec":len(recommended)})

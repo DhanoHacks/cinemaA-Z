@@ -1,0 +1,518 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>webscraper package &#8212; CinemaA-Z  documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="webscraper.migrations package" href="webscraper.migrations.html" />
+    <link rel="prev" title="register.migrations package" href="register.migrations.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="webscraper-package">
+<h1>webscraper package<a class="headerlink" href="#webscraper-package" title="Permalink to this headline">¶</a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="webscraper.migrations.html">webscraper.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="webscraper.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webscraper.migrations.html#module-webscraper.migrations.0001_initial">webscraper.migrations.0001_initial module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webscraper.migrations.html#module-webscraper.migrations.0002_auto_20221124_1735">webscraper.migrations.0002_auto_20221124_1735 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webscraper.migrations.html#module-webscraper.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-webscraper.admin">
+<span id="webscraper-admin-module"></span><h2>webscraper.admin module<a class="headerlink" href="#module-webscraper.admin" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-webscraper.apps">
+<span id="webscraper-apps-module"></span><h2>webscraper.apps module<a class="headerlink" href="#module-webscraper.apps" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="webscraper.apps.WebscraperConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">webscraper.apps.</span></span><span class="sig-name descname"><span class="pre">WebscraperConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.apps.WebscraperConfig" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.apps.config.AppConfig</span></code></p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.apps.WebscraperConfig.default_auto_field">
+<span class="sig-name descname"><span class="pre">default_auto_field</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'django.db.models.BigAutoField'</span></em><a class="headerlink" href="#webscraper.apps.WebscraperConfig.default_auto_field" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.apps.WebscraperConfig.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'webscraper'</span></em><a class="headerlink" href="#webscraper.apps.WebscraperConfig.name" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-webscraper.models">
+<span id="webscraper-models-module"></span><h2>webscraper.models module<a class="headerlink" href="#module-webscraper.models" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="webscraper.models.Items">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">webscraper.models.</span></span><span class="sig-name descname"><span class="pre">Items</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.models.Items" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Class for storing a single movie in a single List for a single User</p>
+<dl class="simple">
+<dt>Functions and methods:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__str__</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list</strong> (<em>models.ForeignKey</em><em>(</em><a class="reference internal" href="#webscraper.models.List" title="webscraper.models.List"><em>List</em></a><em>)</em>) – List of which this item is a part of</p></li>
+<li><p><strong>user</strong> (<em>models.ForeignKey</em><em>(</em><em>User</em><em>)</em>) – User in whose list this movie exists</p></li>
+<li><p><strong>text</strong> (<em>models.CharField</em><em>(</em><em>)</em>) – Text storing name of the movie corresponding to this object</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="webscraper.models.Items.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#webscraper.models.Items.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="webscraper.models.Items.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#webscraper.models.Items.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.Items.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#webscraper.models.Items.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.Items.list">
+<span class="sig-name descname"><span class="pre">list</span></span><a class="headerlink" href="#webscraper.models.Items.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.Items.list_id">
+<span class="sig-name descname"><span class="pre">list_id</span></span><a class="headerlink" href="#webscraper.models.Items.list_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.Items.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#webscraper.models.Items.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.Items.text">
+<span class="sig-name descname"><span class="pre">text</span></span><a class="headerlink" href="#webscraper.models.Items.text" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.Items.user">
+<span class="sig-name descname"><span class="pre">user</span></span><a class="headerlink" href="#webscraper.models.Items.user" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Child.parent</span></code> is a <code class="docutils literal notranslate"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.Items.user_id">
+<span class="sig-name descname"><span class="pre">user_id</span></span><a class="headerlink" href="#webscraper.models.Items.user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="webscraper.models.List">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">webscraper.models.</span></span><span class="sig-name descname"><span class="pre">List</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.models.List" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Class for storing three types of lists (watched, watchlist, liked) for every user</p>
+<dl class="simple">
+<dt>Functions and methods:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__str__</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>type</strong> (<em>models.CharField</em><em>(</em><em>)</em>) – Type of content which the list stores, can be watched, watchlist, liked</p>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="webscraper.models.List.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#webscraper.models.List.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="webscraper.models.List.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#webscraper.models.List.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.List.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#webscraper.models.List.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.List.items_set">
+<span class="sig-name descname"><span class="pre">items_set</span></span><a class="headerlink" href="#webscraper.models.List.items_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">Parent.children</span></code> is a <code class="docutils literal notranslate"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal notranslate"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.List.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#webscraper.models.List.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.List.type">
+<span class="sig-name descname"><span class="pre">type</span></span><a class="headerlink" href="#webscraper.models.List.type" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="webscraper.models.MovieData">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">webscraper.models.</span></span><span class="sig-name descname"><span class="pre">MovieData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.models.MovieData" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>Class for storing movies inside the database</p>
+<dl class="simple">
+<dt>Functions and methods:</dt><dd><ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">__str__</span></code></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>models.CharField</em><em>(</em><em>)</em>) – Name of the movie</p></li>
+<li><p><strong>site_link</strong> (<em>models.JSONField</em><em>(</em><em>)</em>) – Links to IMDb, Rotten Tomatoes, and Metacritic pages of the movie</p></li>
+<li><p><strong>rating</strong> (<em>models.JSONField</em><em>(</em><em>)</em>) – Ratings on  IMDb, Rotten Tomatoes, and Metacritic for the movie</p></li>
+<li><p><strong>plot</strong> (<em>models.CharField</em><em>(</em><em>)</em>) – Short description of the movie plot</p></li>
+<li><p><strong>language</strong> (<em>models.JSONField</em><em>(</em><em>)</em>) – Languages the movie is available in</p></li>
+<li><p><strong>similar</strong> (<em>models.JSONField</em><em>(</em><em>)</em>) – Movies similar to this one</p></li>
+<li><p><strong>year_of_release</strong> (<em>models.IntegerField</em><em>(</em><em>)</em>) – Year of release of the movie</p></li>
+<li><p><strong>duration</strong> (<em>models.InegerField</em><em>(</em><em>)</em>) – Duration in minutes of the movie</p></li>
+<li><p><strong>genre</strong> (<em>models.JSONField</em><em>(</em><em>)</em>) – Genres in which the movie belongs</p></li>
+<li><p><strong>cast</strong> (<em>models.JSONField</em><em>(</em><em>)</em>) – Cast of the movie</p></li>
+<li><p><strong>reviews</strong> (<em>models.JSONField</em><em>(</em><em>)</em>) – Reviews (5 good and 5 bad) for the movie</p></li>
+<li><p><strong>platform</strong> (<em>models.JSONField</em><em>(</em><em>)</em>) – Platforms on which user can watch the movie</p></li>
+<li><p><strong>image_url</strong> (<em>models.CharField</em><em>(</em><em>)</em>) – Link to movie poster</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py exception">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.DoesNotExist">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">DoesNotExist</span></span><a class="headerlink" href="#webscraper.models.MovieData.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.MultipleObjectsReturned">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">MultipleObjectsReturned</span></span><a class="headerlink" href="#webscraper.models.MovieData.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.cast">
+<span class="sig-name descname"><span class="pre">cast</span></span><a class="headerlink" href="#webscraper.models.MovieData.cast" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.duration">
+<span class="sig-name descname"><span class="pre">duration</span></span><a class="headerlink" href="#webscraper.models.MovieData.duration" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.genre">
+<span class="sig-name descname"><span class="pre">genre</span></span><a class="headerlink" href="#webscraper.models.MovieData.genre" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.id">
+<span class="sig-name descname"><span class="pre">id</span></span><a class="headerlink" href="#webscraper.models.MovieData.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.image_url">
+<span class="sig-name descname"><span class="pre">image_url</span></span><a class="headerlink" href="#webscraper.models.MovieData.image_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.language">
+<span class="sig-name descname"><span class="pre">language</span></span><a class="headerlink" href="#webscraper.models.MovieData.language" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.name">
+<span class="sig-name descname"><span class="pre">name</span></span><a class="headerlink" href="#webscraper.models.MovieData.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.objects">
+<span class="sig-name descname"><span class="pre">objects</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;django.db.models.manager.Manager</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#webscraper.models.MovieData.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.platform">
+<span class="sig-name descname"><span class="pre">platform</span></span><a class="headerlink" href="#webscraper.models.MovieData.platform" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><a class="headerlink" href="#webscraper.models.MovieData.plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.rating">
+<span class="sig-name descname"><span class="pre">rating</span></span><a class="headerlink" href="#webscraper.models.MovieData.rating" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.reviews">
+<span class="sig-name descname"><span class="pre">reviews</span></span><a class="headerlink" href="#webscraper.models.MovieData.reviews" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.similar">
+<span class="sig-name descname"><span class="pre">similar</span></span><a class="headerlink" href="#webscraper.models.MovieData.similar" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.site_link">
+<span class="sig-name descname"><span class="pre">site_link</span></span><a class="headerlink" href="#webscraper.models.MovieData.site_link" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="webscraper.models.MovieData.year_of_release">
+<span class="sig-name descname"><span class="pre">year_of_release</span></span><a class="headerlink" href="#webscraper.models.MovieData.year_of_release" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-webscraper.tests">
+<span id="webscraper-tests-module"></span><h2>webscraper.tests module<a class="headerlink" href="#module-webscraper.tests" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="module-webscraper.urls">
+<span id="webscraper-urls-module"></span><h2>webscraper.urls module<a class="headerlink" href="#module-webscraper.urls" title="Permalink to this headline">¶</a></h2>
+<p>URLs and their corresponding views stored here</p>
+</section>
+<section id="module-webscraper.views">
+<span id="webscraper-views-module"></span><h2>webscraper.views module<a class="headerlink" href="#module-webscraper.views" title="Permalink to this headline">¶</a></h2>
+<p>Stores all views/functions involved in the webscraper app</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="webscraper.views.home">
+<span class="sig-prename descclassname"><span class="pre">webscraper.views.</span></span><span class="sig-name descname"><span class="pre">home</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.views.home" title="Permalink to this definition">¶</a></dt>
+<dd><p>Home page of the project, displays current top 10 movies,
+and the watched, liked, and watchlist movies and tv shows for the user.
+Also displays recommended movies based on the movies similar to the
+user’s liked movies which havent been watched by user yet</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="webscraper.views.index">
+<span class="sig-prename descclassname"><span class="pre">webscraper.views.</span></span><span class="sig-name descname"><span class="pre">index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.views.index" title="Permalink to this definition">¶</a></dt>
+<dd><p>Renders the movie page corresponding to the id</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>id</strong> (<em>int</em>) – id of the movie</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="webscraper.views.save_movies">
+<span class="sig-prename descclassname"><span class="pre">webscraper.views.</span></span><span class="sig-name descname"><span class="pre">save_movies</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.views.save_movies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrapes movies from top 1000 list, in multiples of 50</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="webscraper.views.save_tvshows">
+<span class="sig-prename descclassname"><span class="pre">webscraper.views.</span></span><span class="sig-name descname"><span class="pre">save_tvshows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.views.save_tvshows" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrapes tv shows from top 1000 list, in multiples of 50</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="webscraper.views.search_page_view">
+<span class="sig-prename descclassname"><span class="pre">webscraper.views.</span></span><span class="sig-name descname"><span class="pre">search_page_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.views.search_page_view" title="Permalink to this definition">¶</a></dt>
+<dd><p>Searches user query within the database, if it doesnt exist, scrapes atmost
+2 movies and 2 tv shows online, and displays search results</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="webscraper.views.temp">
+<span class="sig-prename descclassname"><span class="pre">webscraper.views.</span></span><span class="sig-name descname"><span class="pre">temp</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#webscraper.views.temp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Redirects to home page</p>
+</dd></dl>
+
+</section>
+<section id="module-webscraper">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-webscraper" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">CinemaA-Z</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">dhano</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="CinemaAZ.html">CinemaAZ package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manage.html">manage module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="register.html">register package</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">webscraper package</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">dhano</a><ul>
+      <li>Previous: <a href="register.migrations.html" title="previous chapter">register.migrations package</a></li>
+      <li>Next: <a href="webscraper.migrations.html" title="next chapter">webscraper.migrations package</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2022, 210050007, 210050044, 210050155.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/webscraper.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
