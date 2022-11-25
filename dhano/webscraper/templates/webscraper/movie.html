@@ -108,7 +108,8 @@
     </p>
   </div>
 </div>
-{% endfor %} {% for r in m.reviews.bad_reviews %}
+{% endfor %} 
+{% for r in m.reviews.bad_reviews %}
 <div class="row">
   <div class="col-lg-2" style="text-align: left">
     <p>&nbsp Bad Review {{ forloop.counter }} :</p>
@@ -125,7 +126,9 @@
     </p>
   </div>
 </div>
-{% endfor %} {% endblock %} {% block js %}
+{% endfor %} 
+{% endblock %} 
+{% block js %}
 <script>
   function myFunction(x) {
     var dots = document.getElementById("dots" + x);

@@ -641,4 +641,4 @@ def home(response):
     
     
     return render(response, "webscraper/index.html"
-    , {"top10":top10, "recommended":recommended[0:8], "watched":watched[0:8], "watchlist":watchlist[0:8], "liked":liked[0:8]})
+    , {"top10":top10, "recommended":recommended[0:8], "watched":watched[0:8], "watchlist":watchlist[0:8], "liked":liked[0:8], "lengthwl":len(watchlist), "lengthwtd":len(watched), "lenlik":len(liked), "lenrec":len(recommended)})

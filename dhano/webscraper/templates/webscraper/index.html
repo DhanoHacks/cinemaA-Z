@@ -61,13 +61,13 @@
                 <div class="carousel-item active" style="text-align:center">
                   <a href="/{{ movie.id }}">
                     <img src="{{ movie.image_url }}"
-                        width="auto" height="650px" style="padding-bottom: 10px" alt="slide 1"></a>
+                        width="auto" height="600px" style="padding-bottom: 10px" alt="slide 1"></a>
                 </div>
                 {% else %}
                 <div class="carousel-item" style="text-align:center">
                   <a href="/{{ movie.id }}">
                     <img src="{{ movie.image_url }}"
-                        width="auto" height="650px" style="padding-bottom: 10px" alt="slide {{ forloop.counter }}"></a>
+                        width="auto" height="600px" style="padding-bottom: 10px" alt="slide {{ forloop.counter }}"></a>
                 </div>
                 {% endif %}
                 {% endfor %}
@@ -85,12 +85,13 @@
     {% if not user.is_authenticated %}
     <div id=signInButton>
       <!-- TODO: SEND THIS TO LOGIN PAGE -->
-        <button class="button" style="vertical-align:middle"><span>Sign In to view your watchlist</span></button>
+        <a href="/login/"><button class="button" style="vertical-align:middle"><span>Sign In to view your watchlist</span></button></a>
     </div>
     {% endif %}
 
     </div>
 
+    {% if user.is_authenticated %}
     <div class=watchlist>
         <div class="line-1"></div>
         <div id=watchlistheading>
@@ -105,6 +106,9 @@
                     width="auto" height="300px" alt="Snow" style="width:100%"></a>
             </div>
           {% endfor %}
+          {% if lengthwl is 0 %}
+            <h3 style="color:white">Nothing To Show</h3>
+          {% endif%}
         </div>
         <div class="line-1"></div>
         <div id=watchlistheading>
@@ -118,7 +122,10 @@
                 <img src="{{ movie.image_url }}"
                     width="auto" height="300px" alt="Snow" style="width:100%"></a>
             </div>
-            {% endfor %}
+          {% endfor %}
+          {% if lenrec is 0 %}
+            <h3 style="color:white">Nothing To Show</h3>
+          {% endif%}
         </div>
 
         <div class="line-1"></div>
@@ -134,6 +141,9 @@
                     width="auto" height="300px" alt="Snow" style="width:100%"></a>
             </div>
           {% endfor %}
+          {% if lenlik is 0 %}
+          <h3 style="color:white">Nothing To Show</h3>
+        {% endif%}
         </div>
         <div class="line-1"></div>
         <div id=watchlistheading>
@@ -148,10 +158,13 @@
                   width="auto" height="300px" alt="Snow" style="width:100%"></a>
           </div>
           {% endfor %}
+          {% if lengthwtd is 0 %}
+          <h3 style="color:white">Nothing To Show</h3>
+        {% endif%}
         </div>
         <div class="line-1"></div>
     </div>
-
+    {% endif %}
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
         crossorigin="anonymous"></script>
