@@ -4,7 +4,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
-from .models import MovieData, List
+from .models import MovieData, List, Items
 
 import requests
 from bs4 import BeautifulSoup
@@ -55,7 +55,16 @@ def index(response,id):
                 watchlist.items_set.create(text = m.name, user=response.user)
             elif len(items) == 1:
                 items[0].delete()
-    return render(response, "webscraper/movie.html", {"m":m,"sim":sim})
+    #Passing variable to know if the movie is in a particular list or not
+    if response.user.is_authenticated:
+        myuser = response.user
+        movie = m.name
+        watched = List.objects.get(type="watched").items_set.all().filter(text = movie, user = myuser)
+        watchlist = List.objects.get(type="watchlist").items_set.all().filter(text = movie, user = myuser)
+        liked = List.objects.get(type="liked").items_set.all().filter(text = movie, user = myuser)
+        return render(response, "webscraper/movie.html", {"m":m,"sim":sim, "watched":len(watched), "watchlist":len(watchlist),"liked":len(liked)})
+    else:
+        return render(response, "webscraper/movie.html", {"m":m,"sim":sim})
 
 def save_movies(response):
     """Scrapes movies from top 1000 list, in multiples of 50"""

@@ -30,7 +30,7 @@
 body {
     background-image: url("https://www.promodo.com/wp-content/uploads/2022/04/Artboard.png");
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: cover;
     background-attachment: fixed;
 }   
     

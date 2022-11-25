@@ -73,16 +73,24 @@
     {% if user.is_authenticated %}
     <form method="post" action="/{{m.id}}">
       {% csrf_token %}
-      <button type="submit" id="watchbutton" name="watched" value="watched" style="font-size:20px; background-color: white;" >Watched</button>
-      <i class="fas fa-popcorn"></i>
-      <button type="submit" id="watchlistbutton"name="watchlist" value="watchlist">
-        Watchlist
-      </button>
-      
-      <button type="submit" id="likedbutton" name="like" value="like" style="font-size:20px; background-color: white;">
-      Like <i class="fa fa-heart" style="color:red"></i>
-      
-      </button>
+      {% if watched == 1%}
+      <button type="submit" id="watchbutton" name="watched" value="watched" style="background-color: lightgreen;">Watched</button>
+      {% else %}
+      <button type="submit" id="watchbutton" name="watched" value="watched" style="background-color: white;">Watched</button>
+      {% endif%}
+
+      {% if watchlist == 1%}
+      <button type="submit" id="watchlistbutton" name="watchlist" value="watchlist" style="background-color: yellow;">Watchlist</button>
+      {% else %}
+      <button type="submit" id="watchlistbutton" name="watchlist" value="watchlist" style="background-color:white">Watchlist</button>
+      {% endif%}
+
+      {% if liked == 1%}
+      <button type="submit" id="likedbutton" name="like" value="like" style="background-color: red;">Like</button>
+      {% else %}
+      <button type="submit" id="likedbutton" name="like" value="like" style="background-color:white">Like</button>
+      {% endif%}
+
     </form>
     {% endif %}
   </div>
@@ -107,7 +115,7 @@
       {% endif %} {% endfor %}
     </ul>
 
-    <h3 style = "text-decoration-line: underline"000000000000000000000000000>Where to Watch</h3>
+    <h3 style = "text-decoration-line: underline">Where to Watch</h3>
 
     <ul class="platforms">
       {% for p in m.platform %}
