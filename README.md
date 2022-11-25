@@ -9,7 +9,8 @@ Usage:
 
 URLs Directory:
 - `/home/`: Home page, displays current top 10 movies, and users watchlist, watched, and liked movies, and recommends new movies based on movies similar to liked movies
-- `/register/`: Registration/login page
+- `/register/`: Registration page
+- `/login/`: Login page
 - `/user/`: Profile page for logged in user
 - `/admin/`: Admin page for superusers
 - `/<id>`: Movie page with the corresponding id, in the database
