@@ -19,4 +19,9 @@ def register(response):
 def user(response):
     """Renders the profile page for the user
     """
+    if response.method == "POST":
+        user = response.user
+        user.delete()
+        print(user)
+        return redirect("/register")
     return render(response, "register/user.html", {})

@@ -35,6 +35,11 @@
           <h4><a href="/home/">Home</a>
           {% if user.is_authenticated%}
           | <a href="/user/">Profile</a> | <a href="/logout/" onclick="alert('Successfully logged out!!');">Logout</a>
+          {% else %}
+          
+          | <a href="/login">Log in</a> |
+            <a href="/register/">Sign up</a>
+          
           {% endif %}
           </h4>
         </div>

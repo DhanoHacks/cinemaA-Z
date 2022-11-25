@@ -13,6 +13,8 @@
 
 {% block content %}
 
+{% if user.is_authenticated %}
+
 <h1>Profile Page</h1>
 <table class="table" style="font-size:24px">
   <tbody>
@@ -35,5 +37,15 @@
     
   </tbody>
 </table>
+
+<form method="POST" style="padding-bottom:30px; font-size:20px; text-align : center">
+  {% csrf_token %}
+  <button type="submit" name="delete" value="delete">Delete Profile</button>
+</form>
+
+{% else %}
+
+<h2>This is a profile page to view your details. Please <a href="/login">login</a> to use this page.</h2>
     
+{% endif%}
 {% endblock %}
