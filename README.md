@@ -1,7 +1,7 @@
 # cinemaA-Z
 CS251 Course Project
 
-Created with :heart: by team *Kyumt Cat*, consisting of Adyasha Patra, Dhananjay Raman, and Tanay Tayal.
+Created with :heart: by team *Kyumt Cat*, consisting of Adyasha Patra, Dhananjay Raman, and Tanay Tayal. Features a database with ~1000 movies and tv shows.
 
 Usage:
 - Clone repository to local system, navigate to the folder and run `python3 manage.py runserver`
@@ -15,7 +15,7 @@ URLs Directory:
 - `/user/`: Profile page for logged in user
 - `/admin/`: Admin page for superusers
 - `/<id>`: Movie page with the corresponding id, in the database
-- `/search/?q=<query>`: Search page displayind results for given query
+- `/search/?q=<query>`: Search page displaying results for given query, takes 1-2 minutes if not present in database
 - `/save-movies`: Scrapes for new movies and stores them in database
 - `/save-tvshows`: Scrapes for new tv shows and stores them in database
 
