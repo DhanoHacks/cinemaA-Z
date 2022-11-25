@@ -57,7 +57,7 @@ def save(response):
     count=0
 
     # Storing each of the urls of 50 movies 
-    while f<1001 and count<2:
+    while f<1001 and count<1:
         # Getting the contents from the each url
         page = requests.get('https://www.imdb.com/search/title/?groups=top_1000&start=' + str(f) + '&ref_=adv_nxt',headers=headers)
         soup = BeautifulSoup(page.text, 'html.parser')
