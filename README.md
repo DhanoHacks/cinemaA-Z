@@ -4,7 +4,7 @@ CS251 Course Project
 Created with :heart: by team *Kyumt Cat*, consisting of Adyasha Patra, Dhananjay Raman, and Tanay Tayal.
 
 Usage:
-- Clone repository to local system, navigate to `dhano` folder, and run `python3 manage.py runserver`
+- Clone repository to local system, navigate to the folder and run `python3 manage.py runserver`
 - Click on `root` url to be redirected to home page of website
 
 URLs Directory:
