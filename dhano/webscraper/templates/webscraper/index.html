@@ -4,11 +4,14 @@
     <title class="loginPage">{% block title %}{% endblock%}</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'stylesheet_home.css' %}" />
+    
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <!--Bootstrap version diff, carousel-->
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
@@ -95,7 +98,7 @@
         </div>
         <div class="line-1"></div>
         <div class="row">
-          {% for movie in watched  %}
+          {% for movie in watchlist %}
             <div class="column">
               <a href="/{{ movie.id }}">
                 <img src="{{ movie.image_url }}"

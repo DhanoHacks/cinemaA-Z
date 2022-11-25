@@ -3,6 +3,8 @@
   <head>
     <title class="loginPage">{% block title %}{% endblock%}</title>
     {% load static %}
+    {% block carousel %}
+    {% endblock %}
     <link rel="stylesheet" href="{% static 'stylesheet.css' %}" />
     <!-- Latest compiled and minified CSS -->
     <link
@@ -13,6 +15,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
+
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
   <body>
@@ -24,33 +27,47 @@
         <div class="col-lg-4 search">
           <form action="{% url 'search_page' %}" method="get">
             <input name="q" type="text" placeholder="Search.." />
-            <input type="radio" id="movieradio" name="choice" value="searchingMovies">
+            <input
+              type="radio"
+              id="movieradio"
+              name="choice"
+              value="searchingMovies"
+            />
             <label for="movieradio">Movie</label>
-            <input type="radio" id="showradio" name="choice" value="searchingShows">
+            <input
+              type="radio"
+              id="showradio"
+              name="choice"
+              value="searchingShows"
+            />
             <label for="showradio">Show</label>
             <button type="submit"><i class="fa fa-search"></i></button>
           </form>
         </div>
         <div class="col-lg-2 links">
           {% if user.is_authenticated%}
-            <h5> <a href="/home/">Home</a> | <a href="/user/">Profile</a> | <a href="/logout/">Logout</a></h5>
+          <h5>
+            <a href="/home/">Home</a> | <a href="/user/">Profile</a> |
+            <a href="/logout/">Logout</a>
+          </h5>
           {% else %}
-            <h5> <a href="/home/">Home</a> | <a href="/login">Log in</a> | <a href="/register/">Sign up</a></h5>
+          <h5>
+            <a href="/home/">Home</a> | <a href="/login">Log in</a> |
+            <a href="/register/">Sign up</a>
+          </h5>
           {% endif %}
         </div>
       </div>
     </div>
 
-    <div style="background-color: #000; padding-top: 20px; padding-bottom: 20px">
-      <div class="container mainData">
-        {% block content %}
-        {% endblock%}
-      </div>
+    <div
+      style="background-color: #000; padding-top: 20px; padding-bottom: 20px; height:100%"
+    >
+      <div class="container mainData">{% block content %} {% endblock%}</div>
     </div>
     <script src="script.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    {% block js %}
-    {% endblock %}
+    {% block js %} {% endblock %}
   </body>
 </html>
