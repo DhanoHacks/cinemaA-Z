@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+
+{%if not user.is_authenticated %}
     {% load crispy_forms_tags %}
     <form method="POST" class="form-group">
         {% csrf_token %}
@@ -12,4 +14,8 @@
         <button type="submit">Login</button>
         <p>Don't have an account? Create one <a href="/register">here</a></p>
     </form>
+
+{% else %}
+<h2>You are already logged in as {{user.username}}. If you wish to login to another account, you must first <a href="/logout">logout</a> here. If you wish to continue using the website, you go to the <a href="/home">home</a> page.</h2>
+{% endif %}
 {% endblock %}
