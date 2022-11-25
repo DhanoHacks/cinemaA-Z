@@ -12,6 +12,28 @@
           {% endblock %}
 
 {% block content %}
-    <h3>{{user.username}}</h3>
+
+<h1>Profile Page</h1>
+<table class="table" style="font-size:24px">
+  <tbody>
+    <tr>
+      <td style="width:40%">Username</td>
+      <td style="width:40%">{{user.username}}</td>
+    </tr>
+    <tr>
+      <td>First Name</td>
+      <td>{{user.first_name }}</td>
+    </tr>
+    <tr>
+      <td>Last Name</td>
+      <td>{{user.last_name}}</td>
+    </tr>
+    <tr>
+      <td>Email Id</td>
+      <td>{{user.email}}</td>
+    </tr>
+    
+  </tbody>
+</table>
     
 {% endblock %}
