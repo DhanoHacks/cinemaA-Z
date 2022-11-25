@@ -18,20 +18,20 @@
   <body>
     <div class="top container-fluid">
       <div class="rows">
-        <div class="col-lg-6">
+        <div class="col-lg-5">
           <h3 style="padding-bottom: 3px"><b>DATr</b></h3>
         </div>
         
-        <div class="col-lg-4 search">
+        <div class="col-lg-3 search">
           {% block searchbar %}
           {% endblock %}
         </div>
-        <div class="col-lg-2 links">
-          <h5><a href="/home/">Home</a>
+        <div class="col-lg-4 links" style="padding: 10px; text-align:center">
+          <h4><a href="/home/">Home</a>
           {% if user.is_authenticated%}
-          | <a href="/user/">Profile</a> | <a href="/logout/">Logout</a>
+          | <a href="/user/">Profile</a> | <a href="/logout/" onclick="alert('Successfully logged out!!');">Logout</a>
           {% endif %}
-          </h5>
+          </h4>
         </div>
       </div>
     </div>

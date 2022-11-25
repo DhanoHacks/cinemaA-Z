@@ -34,7 +34,7 @@
           {% if user.is_authenticated%}
           <h4>
             <a href="/home/">Home</a> | <a href="/user/">Profile</a> |
-            <a href="/logout/">Logout</a>
+            <a href="/logout/" onclick="alert('Successfully logged out!');">Logout</a>
           </h4>
           {% else %}
           <h4>
@@ -54,6 +54,7 @@
     <script src="script.js"></script>
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    {% block js %} {% endblock %}
+    {% block js %}
+    {% endblock %}
   </body>
 </html>

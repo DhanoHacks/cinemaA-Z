@@ -7,10 +7,6 @@
 {% block searchbar %}
           <form action="{% url 'search_page' %}" method="get">
             <input name="q" type="text" placeholder="Search.." />
-            <input type="radio" id="movieradio" name="choice" value="searchingMovies">
-            <label for="movieradio">Movie</label>
-            <input type="radio" id="showradio" name="choice" value="searchingShows">
-            <label for="showradio">Show</label>
             <button type="submit"><i class="fa fa-search"></i></button>
           </form>
           {% endblock %}

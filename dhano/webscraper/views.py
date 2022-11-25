@@ -622,23 +622,5 @@ def home(response):
         if len(f)>0 and f[0] not in watched:
             recommended.append(f[0])
 
-    # list = List.objects.get(type="watched")
-    # watched = []
-    
-    # for movie in list[0].items_set.all():
-    #     if(movie.user == response.user):
-    #         watched.append(MovieData.objects.get(name=movie))
-    # list = List.objects.filter(type="watchlist")
-    # watchlist = []
-    # for movie in list[0].items_set.all():
-    #     if(movie.user == response.user):
-    #         watchlist.append(MovieData.objects.get(name=movie))
-    # list = List.objects.filter(type="liked")
-    # liked = []
-    # for movie in list[0].items_set.all():
-    #     if(movie.user == response.user):
-    #         liked.append(MovieData.objects.get(name=movie))
-    
-    
     return render(response, "webscraper/index.html"
     , {"top10":top10, "recommended":recommended[0:8], "watched":watched[0:8], "watchlist":watchlist[0:8], "liked":liked[0:8], "lengthwl":len(watchlist), "lengthwtd":len(watched), "lenlik":len(liked), "lenrec":len(recommended)})
