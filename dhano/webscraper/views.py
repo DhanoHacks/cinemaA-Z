@@ -48,18 +48,18 @@ def index(response,id):
     return render(response, "webscraper/movie.html", {"m":m,"sim":sim})
 
 def save(response):
-    return save_tvshow(response)
+    # return save_tvshow(response)
     # Getting English translated titles from the movies
     headers = {'Accept-Language': 'en-US, en;q=0.5'}
 
-    f=int(open("done.txt","r").read())
+    f=int(open("done_movie.txt","r").read())
     #pages = np.arange(1,1001,50)
-    page=f
+    count=0
 
     # Storing each of the urls of 50 movies 
-    if page<1001:
+    while f<1001 and count<2:
         # Getting the contents from the each url
-        page = requests.get('https://www.imdb.com/search/title/?groups=top_1000&start=' + str(page) + '&ref_=adv_nxt',headers=headers)
+        page = requests.get('https://www.imdb.com/search/title/?groups=top_1000&start=' + str(f) + '&ref_=adv_nxt',headers=headers)
         soup = BeautifulSoup(page.text, 'html.parser')
         
         # Aiming the part of the html we want to get the information from
@@ -193,9 +193,12 @@ def save(response):
                 ,language=language.text.rstrip().split(", "),similar=similar_for_movie
                 ,year_of_release=year,duration=runtime,genre=genre.split(", "),cast=stars
                 ,reviews=review_for_one_movie,platform=platform_for_one_movie,image_url=imageurl)
+            
                 m.save()
-    open("done.txt","w").write(str(f+50))
-    return HttpResponse(f"Finished Scraping Movies {f} - {f+49}")
+        f+=50
+        count+=1
+        open("done_movie.txt","w").write(str(f))
+    return HttpResponse(f"Finished Scraping Movies {f-50*count} - {f-1}")
 
 
 def save_tvshow(response):
