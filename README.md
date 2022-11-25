@@ -6,6 +6,7 @@ Created with :heart: by team *Kyumt Cat*, consisting of Adyasha Patra, Dhananjay
 Usage:
 - Clone repository to local system, navigate to the folder and run `python3 manage.py runserver`
 - Click on `root` url to be redirected to home page of website
+- One admin account already exists: Username - dhano, Password - dhano
 
 URLs Directory:
 - `/home/`: Home page, displays current top 10 movies, and users watchlist, watched, and liked movies, and recommends new movies based on movies similar to liked movies
